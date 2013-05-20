@@ -24,6 +24,7 @@ public class Network {
 	@Override
 	public String toString()
 	{
+	    // commit
 	    return "Network:" +
 	    		"\ngrid_size: "+ config.grid_size+
 	    		"\nnumNodes: "+ config.numNodes+
