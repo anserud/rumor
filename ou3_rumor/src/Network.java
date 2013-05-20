@@ -36,12 +36,12 @@ public class Network
     public String toString()
     {
         // commit
-        return "Network:" + "\ngrid_size: " + config.grid_size + "\nnumNodes: "
-                + config.numNodes + "\ndistanceNodes: " + config.distanceNodes
-                + "\nrangeNodes: " + config.rangeNodes + "\nqueryNodes: "
-                + config.queryNodes + "\nqueryStep: " + config.queryStep
-                + "\nevent_P: " + config.event_P + "\nagent_P: "
-                + config.agent_P + "\nagent_TTL: " + config.agent_TTL
-                + "\nquery_TTL: " + config.query_TTL;
+        return "Network:" + "\ngrid_size: " + config.getGrid_size() + "\nnumNodes: "
+                + config.getNumNodes() + "\ndistanceNodes: " + config.getDistanceNodes()
+                + "\nrangeNodes: " + config.getRangeNodes() + "\nqueryNodes: "
+                + config.getQueryNodes() + "\nqueryStep: " + config.getQueryStep()
+                + "\nevent_P: " + config.getEvent_P() + "\nagent_P: "
+                + config.getAgent_P() + "\nagent_TTL: " + config.getAgent_TTL()
+                + "\nquery_TTL: " + config.getQuery_TTL();
     }
 }

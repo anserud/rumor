@@ -8,16 +8,66 @@ import org.xml.sax.helpers.DefaultHandler;
 public class Configuration extends DefaultHandler
 {
     
-    public int   grid_size;
-    public int   numNodes;
-    public int   distanceNodes;
-    public int   rangeNodes;
-    public int   queryNodes;
-    public int   queryStep;
-    public float event_P;
-    public float agent_P;
-    public int   agent_TTL;
-    public int   query_TTL;
+    private int   grid_size;
+    private int   numNodes;
+    private int   distanceNodes;
+    private int   rangeNodes;
+    private int   queryNodes;
+    private int   queryStep;
+    private float event_P;
+    private float agent_P;
+    private int   agent_TTL;
+    private int   query_TTL;
+    
+    public int getGrid_size()
+    {
+        return grid_size;
+    }
+    
+    public int getNumNodes()
+    {
+        return numNodes;
+    }
+    
+    public int getDistanceNodes()
+    {
+        return distanceNodes;
+    }
+    
+    public int getRangeNodes()
+    {
+        return rangeNodes;
+    }
+    
+    public int getQueryNodes()
+    {
+        return queryNodes;
+    }
+    
+    public int getQueryStep()
+    {
+        return queryStep;
+    }
+    
+    public float getEvent_P()
+    {
+        return event_P;
+    }
+    
+    public float getAgent_P()
+    {
+        return agent_P;
+    }
+    
+    public int getAgent_TTL()
+    {
+        return agent_TTL;
+    }
+    
+    public int getQuery_TTL()
+    {
+        return query_TTL;
+    }
     
     public Configuration( String fileName )
     {
