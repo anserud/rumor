@@ -1,7 +1,7 @@
 public class Simulator
 {
     
-    private int TestCarina;
+   
     
     public static void main( String[] args )
     {
