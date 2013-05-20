@@ -21,4 +21,9 @@ public class Network {
 	private void sendAgents(){}
 	private void sendQueries(){}
 	
+	@Override
+	public String toString()
+	{
+	    return "Network: [  grid_size: "+ config.grid_size;
+	}
 }
