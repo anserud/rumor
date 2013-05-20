@@ -19,13 +19,14 @@ public class Configuration extends DefaultHandler{
 	
 	public Configuration(String fileName){
 		SAXParserFactory factory = SAXParserFactory.newInstance();
+		
 		try {
 			// Parse the input
 			SAXParser saxParser = factory.newSAXParser();
 			saxParser.parse(new File(fileName), this);
 
 		} catch (Throwable t) {
-			System.out.println("Could not load configuration");
+			System.out.println("Could not load configuration from: "+fileName);
 			t.printStackTrace();
 			System.exit(0);
 		}

@@ -24,6 +24,16 @@ public class Network {
 	@Override
 	public String toString()
 	{
-	    return "Network: [  grid_size: "+ config.grid_size;
+	    return "Network:" +
+	    		"\ngrid_size: "+ config.grid_size+
+	    		"\nnumNodes: "+ config.numNodes+
+	    		"\ndistanceNodes: "+ config.distanceNodes+
+	    		"\nrangeNodes: "+ config.rangeNodes+
+	    		"\nqueryNodes: "+ config.queryNodes+
+	    		"\nqueryStep: "+ config.queryStep+
+	    		"\nevent_P: "+ config.event_P+
+	    		"\nagent_P: "+ config.agent_P+
+	    		"\nagent_TTL: "+ config.agent_TTL+
+	    		"\nquery_TTL: "+ config.query_TTL;
 	}
 }
