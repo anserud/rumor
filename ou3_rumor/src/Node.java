@@ -57,7 +57,7 @@ public class Node
 	 * @param event_P the event_ p
 	 * @param agent_P the agent_ p
 	 */
-	public Node(int id,long event_P, long agent_P){
+   public Node(int id,long event_P, long agent_P){
 	   this.id = id;
 	   this.event_P 	= event_P;
 	   this.agent_P 	= agent_P;
@@ -65,7 +65,6 @@ public class Node
 	   eventList 		= new LinkedList<Event>();
 	   messageQueue 	= new LinkedBlockingQueue<Message>();
 	   //routingTable 	= new RouteTable();
-	   
    }
    
    /**
@@ -156,6 +155,7 @@ public class Node
     *  @author Alexander Anserud
     */
    private void tryCreateAgent(){
+	   // A float between 1 and 0
 	   float chance  = new Random().nextFloat();
 	   if(chance <= agent_P)
 	   {
@@ -171,6 +171,7 @@ public class Node
     */
    private void tryCreateEvent()
    {
+	   // A float between 1 and 0
 	   float chance  = new Random().nextFloat();
 	   if(chance <= event_P)
 	   {
