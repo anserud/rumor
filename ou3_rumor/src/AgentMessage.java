@@ -1,5 +1,5 @@
 public class AgentMessage extends Message
 {
     
-    private int test = 5;
+    private int test = 10;
 }
