@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config grid_size="50" numNodes="2500" distanceNodes="10" rangeNodes="15" maxSteps="10000" event_P="0.0001" agent_P="0.5" agent_TTL="50" query_TTL="45" queryStep="400" queryNodes="4"></config>
