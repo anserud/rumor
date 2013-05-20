@@ -1,4 +1,4 @@
-
-public class QueryMessage extends Message {
-
+public class QueryMessage extends Message
+{
+    
 }
