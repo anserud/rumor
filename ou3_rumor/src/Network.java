@@ -67,8 +67,8 @@ public class Network
         // Setup data-structures:
         network = new Node[gridSize][gridSize];
         queryNodes = new Node[ config.getQueryNodes()];
-        messages = new ArrayList<Messages>();
-        queuedMessages = new ArrayList<MEssages>();
+        messages = new ArrayList<Message>();
+        queuedMessages = new ArrayList<Message>();
         
         randGen = new Random();
         
@@ -115,7 +115,7 @@ public class Network
     {
         // Assign queryNodeNumber of Nodes:
         int i = 0;
-        while ( i < queryNodeNumber )
+        while ( i < queryNodes.length )
         {
             
             // Get random position:
