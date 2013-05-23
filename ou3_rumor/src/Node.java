@@ -26,7 +26,7 @@ public class Node
    private LinkedList<Event> eventList;
    
    /** The routing table. */
-   private LinkedList<Event> routingTable;
+   private LinkedList<Route> routingTable;
    
    /** The message queue. */
    private LinkedBlockingQueue<Message> messageQueue;
@@ -36,7 +36,7 @@ public class Node
     * @author Alexander Anserud
     * @return the routing table
     */
-   public LinkedList<Event> getRoutingTable() {
+   public LinkedList<Route> getRoutingTable() {
 	   return routingTable;
    }
    
@@ -64,7 +64,7 @@ public class Node
 	   neighbourList 	= new LinkedList<Node>();
 	   eventList 		= new LinkedList<Event>();
 	   messageQueue 	= new LinkedBlockingQueue<Message>();
-	   //routingTable 	= new RouteTable();
+	   routingTable 	= new LinkedList<Route>();
    }
    
    /**
@@ -102,10 +102,10 @@ public class Node
 		   // First look in route table for a trail of the event
 		   for (Route r : getRoutingTable())
 		   {
-			   tmpEventID = r.getEventID;
-			   tmpEventDistance = r.getDistance;
+			   tmpEventID = r.getEventID();
+			   tmpEventDistance = r.getDistance();
 			   // Did we found a trail for the event ?
-			   if(r.getEventID == queryMessage.getEventId())
+			   if(tmpEventID == queryMessage.getEventId())
 			   {
 				   isFound = true;
 				   // Are we at the event node?
@@ -154,28 +154,31 @@ public class Node
     * Try create agent.
     *  @author Alexander Anserud
     */
-   private void tryCreateAgent(){
+   private boolean tryCreateAgent(){
 	   // A float between 1 and 0
 	   float chance  = new Random().nextFloat();
 	   if(chance <= agent_P)
 	   {
 		   // Create agent
+		   return true;
 	   }
-	   
-	   
+	   return false;
    }
    
    /**
     * Try create event.
     *  @author Alexander Anserud
     */
-   private void tryCreateEvent()
+   private boolean tryCreateEvent(int created_at, int eventID)
    {
 	   // A float between 1 and 0
 	   float chance  = new Random().nextFloat();
 	   if(chance <= event_P)
 	   {
-		   // Create event
+		   Event e =  new Event(eventID, this, created_at);
+		   eventList.push(e);
+		   return true;
 	   }  
+	   return false;
    }
 }
