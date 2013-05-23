@@ -29,6 +29,7 @@ public class Route
     	this.distance = distance;
     }
     
+    
     /**
      * Gets the event id.
      * @author Alexander Anserud 
@@ -55,4 +56,25 @@ public class Route
 	public int getDistance() {
 		return distance;
 	}
+	
+	/**
+	 * Update the node using this dist and dir
+	 * @param dist the new distance
+	 * @param dir the new direction
+	 */ 
+	public void updateRoute( int dist, Node dir )
+    {
+        this.distance = dist;
+        this.direction = dir;
+    }
+	
+	/**
+	 * Copy the Route toCopy
+	 * @param toCopy Route to copy
+	 * @return new Route with the same attributes
+	 */
+    public Route copy( Route toCopy )
+    {
+    	return new Route(toCopy.getEvent(),getDistance(),getDirection());
+    }
 }
