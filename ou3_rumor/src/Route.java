@@ -1,6 +1,7 @@
 // TODO: Auto-generated Javadoc
 /**
  * The Class Route.
+ * @author Alexander Anserud 
  */
 public class Route
 {
@@ -16,7 +17,7 @@ public class Route
     
     /**
      * Instantiates a new route.
-     *
+     * @author Alexander Anserud 
      * @param eventID the event id
      * @param direction the direction
      * @param distance the distance
@@ -30,7 +31,7 @@ public class Route
     
     /**
      * Gets the event id.
-     *
+     * @author Alexander Anserud 
      * @return the event id
      */
     public int getEventID() {
@@ -39,7 +40,7 @@ public class Route
 
 	/**
 	 * Gets the direction.
-	 *
+	 * @author Alexander Anserud 
 	 * @return the direction
 	 */
 	public Node getDirection() {
@@ -48,7 +49,7 @@ public class Route
 
 	/**
 	 * Gets the distance.
-	 *
+	 * @author Alexander Anserud 
 	 * @return the distance
 	 */
 	public int getDistance() {
