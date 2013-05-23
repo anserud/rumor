@@ -1,6 +1,7 @@
 // TODO: Auto-generated Javadoc
 /**
  * The Class Event.
+ * @author Alexander Anserud 
  */
 public class Event
 {
@@ -18,7 +19,7 @@ public class Event
     
     /**
      * Instantiates a new event.
-     *
+     * @author Alexander Anserud 
      * @param id the id
      * @param orgin the orgin
      * @param created_at the created_at
@@ -31,7 +32,7 @@ public class Event
     
     /**
      * Gets the event id.
-     *
+     * @author Alexander Anserud 
      * @return the id
      */
     public int getId() {
@@ -40,7 +41,7 @@ public class Event
 
 	/**
 	 * Gets the orgin node.
-	 *
+	 * @author Alexander Anserud 
 	 * @return the orgin
 	 */
 	public Node getOrgin() {
@@ -49,7 +50,7 @@ public class Event
 
 	/**
 	 * Gets the time created.
-	 *
+	 * @author Alexander Anserud 
 	 * @return the created_at
 	 */
 	public int getCreated_at() {
