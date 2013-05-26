@@ -19,8 +19,13 @@ public class Configuration extends DefaultHandler
     private float agent_P;
     private int   agent_TTL;
     private int   query_TTL;
+    public int 		maxSteps;
     
-    public int getGrid_size()
+    public int getMaxSteps() {
+		return maxSteps;
+	}
+
+	public int getGrid_size()
     {
         return grid_size;
     }
@@ -95,6 +100,7 @@ public class Configuration extends DefaultHandler
     {
         System.out.println( "Loading configuration file: "
                 + atts.getValue( "name" ) + ".." );
+        this.maxSteps = Integer.parseInt( atts.getValue( "maxSteps" ) );
         this.grid_size = Integer.parseInt( atts.getValue( "grid_size" ) );
         this.numNodes = Integer.parseInt( atts.getValue( "numNodes" ) );
         this.distanceNodes = Integer
