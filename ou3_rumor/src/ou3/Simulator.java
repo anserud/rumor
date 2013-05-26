@@ -17,6 +17,10 @@ public class Simulator
         for ( int i = 0 ; i < net.config.getMaxSteps() ; i++ )
         {
             this.net.timeStep( i );
+            if( i == 9900)
+            {
+                System.out.println( EventID.currentID());
+            }
         }
         
         System.out.println( net.printQueryNodes());

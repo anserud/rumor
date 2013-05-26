@@ -27,25 +27,36 @@ public class AgentMessage extends Message
     {
         Route updateAt;
         EventID key;
+        
+        // For every route in the message routingtable:
         for ( Route r : this.routingTable.values() )
         {
             key = r.getEvent();
+            
+            // Check if the node contains this route:
             if ( nodeTable.containsKey( key ) )
             {
+                
+                // If so update:
                 updateAt = nodeTable.get( key );
                 if ( updateAt.getDistance() < r.getDistance() )
                 {
+                    // The nodes route is shorter, update r
                     r.updateRoute( updateAt.getDistance(),
                             updateAt.getDirection() );
                 } else
                 {
+                    // if this route is shorter, update the node.
                     updateAt.updateRoute( r.getDistance(), r.getDirection() );
                 }
             } else
             {
+                // the node doesn't have the route, add it:
                 nodeTable.put( key, new Route(r) );
             }
         }
+        
+        // Add all routes from the node:
         for ( Route r : nodeTable.values() )
         {
             if ( !this.routingTable.containsKey( r.getEvent() ) )
