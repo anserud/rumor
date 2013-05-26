@@ -154,7 +154,7 @@ public class Network
         boolean retVal = false;
         for( T v: arry )
         {
-            if( v.equals( val )) retVal=true; // Could go lazy and return here?
+            if(v != null && v.equals( val )) retVal=true; // Could go lazy and return here?
         }
         return retVal;
     }
