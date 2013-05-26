@@ -19,6 +19,7 @@ public class Simulator
             this.net.timeStep( i );
         }
         
+        System.out.println( net.printQueryNodes());
         System.out.println( QueryMessage.getSucces()+" / "+QueryMessage.getTotal());
         System.out.println( EventID.currentID());
     }

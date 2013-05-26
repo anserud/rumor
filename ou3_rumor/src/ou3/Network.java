@@ -1,3 +1,4 @@
+
 package ou3;
 
 
@@ -5,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
+
 /**
- * The class responisble for keeping the network of
- * Node and control their behaviour. Generates this
- * network, the queryNodes and every Node s neighbour.
+ * The class responisble for keeping the network of Node and control their
+ * behaviour. Generates this network, the queryNodes and every Node s neighbour.
  * Also controls the Message s during each timeStep.
  * 
  * @see #network
  * @see #queryNodes
  * @see #messages
  * @see #queuedMessages
- * @see #Network( String fileName)
+ * @see #Network(String fileName)
  * @see #generateNodes()
  * @see #assignQueryNodes()
  * @see #makeNeighbours()
@@ -30,30 +31,31 @@ public class Network
 {
     
     // The configuration data:
-    public Configuration   config;
+    public Configuration       config;
     
     // Mabe remove these?
-    private int                    gridSize;
-    private int                    queryTimer;
+    private int                gridSize;
+    private int                queryTimer;
     
-    // The Node-array network: 
-    private Node[][]               network;
+    // The Node-array network:
+    private Node[][]           network;
     
     // The Messages, live and queued:
-    private ArrayList<Message>     messages;
-    private ArrayList<Message>     queuedMessages;
+    private ArrayList<Message> messages;
+    private ArrayList<Message> queuedMessages;
     
     // The Nodes' responisble for sending queries:
-    private Node[]                 queryNodes;
+    private Node[]             queryNodes;
     
     // Random number genreator neccesary:
-    private Random                 randGen;
+    private Random             randGen;
     
     /**
-     * The Network constructor; taking a xml- Configuration -
-     * file name as parameter.
+     * The Network constructor; taking a xml- Configuration - file name as
+     * parameter.
      * 
-     * @param fileName String with name of Configuration -xml-file
+     * @param fileName
+     *            String with name of Configuration -xml-file
      * @see generateNodes()
      * @see assignQueryNodes()
      * @see makeNeighbours()
@@ -62,14 +64,13 @@ public class Network
     {
         // Get the config Configuration:
         config = new Configuration( fileName );
-
+        
         Node.setAgentProbability( config.getAgent_P() );
         Node.setEventProbability( config.getEvent_P() );
         
         AgentMessage.setLifeLength( config.getAgent_TTL() );
         QueryMessage.setLifeLength( config.getQuery_TTL() );
         QueryMessage.setExpected( config.getQuery_TTL() * 8 );
-
         
         // Maybe remove?
         gridSize = config.getGrid_size();
@@ -77,7 +78,7 @@ public class Network
         
         // Setup data-structures:
         network = new Node[gridSize][gridSize];
-        queryNodes = new Node[ config.getQueryNodes()];
+        queryNodes = new Node[config.getQueryNodes()];
         messages = new ArrayList<Message>();
         queuedMessages = new ArrayList<Message>();
         
@@ -91,11 +92,10 @@ public class Network
     }
     
     /**
-     * Generates Node s for the network array, putting
-     * new ones at every location.
+     * Generates Node s for the network array, putting new ones at every
+     * location.
      * <p>
-     * The int gridSize must correspond to the size of
-     * the square array.
+     * The int gridSize must correspond to the size of the square array.
      * 
      * @see Node
      * @see Node#Node( whatever?
@@ -111,16 +111,17 @@ public class Network
             }
         }
     }
+    
     /**
-     * Assign queryNodeNumber of Node s to be respnsible 
-     * for generating QueryMessage s.
+     * Assign queryNodeNumber of Node s to be respnsible for generating
+     * QueryMessage s.
      * 
      * @see #queryNodes
      * @see Node
      * @see QueryMessage
      * @see java.util.Random
      * 
-     */ 
+     */
     private void assignQueryNodes()
     {
         // Assign queryNodeNumber of Nodes:
@@ -135,42 +136,42 @@ public class Network
             // If the position is old, don't add it:
             if ( !this.arrayContains( this.queryNodes, this.network[rX][rY] ) )
             {
-                this.queryNodes[i]=this.network[rX][rY];
+                this.queryNodes[i] = this.network[rX][rY];
                 i++;
             }
         }
     }
     
     /**
-     * Check whether an array of type <T> contains the
-     * value val. Return true if so, and false otherwise.
+     * Check whether an array of type <T> contains the value val. Return true if
+     * so, and false otherwise.
      * 
-     * @param arry the array of type T
-     * @param val the T value to look for
-     * @return retVal boolean over whether arry contains val 
-     */ 
+     * @param arry
+     *            the array of type T
+     * @param val
+     *            the T value to look for
+     * @return retVal boolean over whether arry contains val
+     */
     private <T> boolean arrayContains( T[] arry, T val )
     {
         boolean retVal = false;
-        for( T v: arry )
+        for ( T v : arry )
         {
-            if(v != null && v.equals( val )) retVal=true;
+            if ( v != null && v.equals( val ) ) retVal = true;
         }
         return retVal;
     }
     
     /**
-     * Generate the arrays of neighbours for every Node in 
-     * the network.
+     * Generate the arrays of neighbours for every Node in the network.
      * <p>
-     * Only nodes one rank away ( within 15 units if there's
-     * 10 units between every row and column ) will be considered
-     * neighbours of the Node.
+     * Only nodes one rank away ( within 15 units if there's 10 units between
+     * every row and column ) will be considered neighbours of the Node.
      * 
      * @see #network
      * @see Node
-     * @see Node#updateNeighbours( Node[] neighbours )
-     */ 
+     * @see Node#updateNeighbours(Node[] neighbours )
+     */
     private void makeNeighbours()
     {
         int nodes;
@@ -201,8 +202,8 @@ public class Network
                 if ( x != 0 ) neighbours[i++] = this.network[x - 1][y];
                 if ( x != 0 && y != ( this.gridSize - 1 ) )
                     neighbours[i++] = this.network[x - 1][y + 1];
-                    
-                // To the right:    
+                
+                // To the right:
                 if ( x != ( this.gridSize - 1 ) && y != 0 )
                     neighbours[i++] = this.network[x + 1][y - 1];
                 if ( x != ( this.gridSize - 1 ) )
@@ -224,37 +225,32 @@ public class Network
     /**
      * Take timeStep time, updating the network.
      * <p>
-     * Start by generating Events and AgentMessages.
-     * Then generate QueryMessages at the QueryNodes if
-     * it's time for that, determined in the Configuration.
-     * Then update Messages.
-     * And finaly activate all Node s for the next step.
+     * Start by generating Events and AgentMessages. Then generate QueryMessages
+     * at the QueryNodes if it's time for that, determined in the Configuration.
+     * Then update Messages. And finaly activate all Node s for the next step.
      * <p>
-     * The Message update will follow the formula:
-     *  For each active Message in messages:
-     *      process, stepUpdate, and Send.
-     *      if it didn't survive the stepUpdate, mark for removal.
-     *      if it couldn't send, mark for queueing.
-     *  For each Message in queue queuedMessages:
-     *      stepUpdate and then attempt send.
-     *      if it didn't survive the stepUpdate, mark for removal.
-     *      if it did send, mark as active.
-     *  For each Message marked for removal; drop reference.
-     *  For each Message to change state, add to correct list and remove from other.
+     * The Message update will follow the formula: For each active Message in
+     * messages: process, stepUpdate, and Send. if it didn't survive the
+     * stepUpdate, mark for removal. if it couldn't send, mark for queueing. For
+     * each Message in queue queuedMessages: stepUpdate and then attempt send.
+     * if it didn't survive the stepUpdate, mark for removal. if it did send,
+     * mark as active. For each Message marked for removal; drop reference. For
+     * each Message to change state, add to correct list and remove from other.
      * 
-     * @param time the current timeStep
+     * @param time
+     *            the current timeStep
      * @see #network
      * @see #queryNodes
      * @see #messages
      * @see #queuedMessages
      * @see Node
-     * @see Node#generateEvent( int time )
-     * @see Node#generateQuery( EventID target )
+     * @see Node#generateEvent(int time )
+     * @see Node#generateQuery(EventID target )
      * @see Message
      * @see Message#processMessage()
      * @see Message#stepUpdate()
      * @see Message#sendMessage()
-     */ 
+     */
     public void timeStep( int time )
     {
         
@@ -266,10 +262,11 @@ public class Network
         
         activateNodes();
         
-     //   printMessage(this.messages);
-        //System.out.println(time+" : "+ this.messages.size()+" "+this.queuedMessages.size());
+        // printMessage(this.messages);
+        // System.out.println(time+" : "+
+        // this.messages.size()+" "+this.queuedMessages.size());
     }
-
+    
     /**
      * 
      */
@@ -284,7 +281,7 @@ public class Network
             }
         }
     }
-
+    
     private void handleMessages()
     {
         // Setup Message handling:
@@ -345,7 +342,7 @@ public class Network
         this.messages.removeAll( toRemoveM );
         this.queuedMessages.removeAll( toRemoveQ );
     }
-
+    
     private void generateQueries( int time )
     {
         // If it is time for it:
@@ -366,19 +363,19 @@ public class Network
             }
         }
     }
-
+    
     private void generateEvents( int time )
     {
         // For every Node generate Event:
-
+        
         for ( Node[] row : this.network )
         {
             for ( Node n : row )
             {
                 
-                if( n.tryCreateEvent(time))
+                if ( n.tryCreateEvent( time ) )
                 {
-                    if( n.tryCreateAgent() )
+                    if ( n.tryCreateAgent() )
                     {
                         this.messages.add( new AgentMessage( n ) );
                     }
@@ -395,18 +392,28 @@ public class Network
         }
     }
     
-    
     @Override
     public String toString()
     {
         // commit
-        return "Network:" + "\ngrid_size: " + config.getGrid_size() + "\nnumNodes: "
-                + config.getNumNodes() + "\ndistanceNodes: " + config.getDistanceNodes()
-                + "\nrangeNodes: " + config.getRangeNodes() + "\nqueryNodes: "
-                + config.getQueryNodes() + "\nqueryStep: " + config.getQueryStep()
-                + "\nevent_P: " + config.getEvent_P() + "\nagent_P: "
-                + config.getAgent_P() + "\nagent_TTL: " + config.getAgent_TTL()
-                + "\nquery_TTL: " + config.getQuery_TTL();
+        return "Network:" + "\ngrid_size: " + config.getGrid_size()
+                + "\nnumNodes: " + config.getNumNodes() + "\ndistanceNodes: "
+                + config.getDistanceNodes() + "\nrangeNodes: "
+                + config.getRangeNodes() + "\nqueryNodes: "
+                + config.getQueryNodes() + "\nqueryStep: "
+                + config.getQueryStep() + "\nevent_P: " + config.getEvent_P()
+                + "\nagent_P: " + config.getAgent_P() + "\nagent_TTL: "
+                + config.getAgent_TTL() + "\nquery_TTL: "
+                + config.getQuery_TTL();
+    }
+    
+    public String printQueryNodes()
+    {
+        String s = "";
+        for ( Node n : this.queryNodes )
+        {
+            s = s + ", " + n.toString();
+        }
+        return s;
     }
 }
-
