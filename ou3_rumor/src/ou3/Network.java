@@ -395,16 +395,47 @@ public class Network
     @Override
     public String toString()
     {
-        // commit
-        return "Network:" + "\ngrid_size: " + config.getGrid_size()
-                + "\nnumNodes: " + config.getNumNodes() + "\ndistanceNodes: "
-                + config.getDistanceNodes() + "\nrangeNodes: "
-                + config.getRangeNodes() + "\nqueryNodes: "
-                + config.getQueryNodes() + "\nqueryStep: "
-                + config.getQueryStep() + "\nevent_P: " + config.getEvent_P()
-                + "\nagent_P: " + config.getAgent_P() + "\nagent_TTL: "
-                + config.getAgent_TTL() + "\nquery_TTL: "
-                + config.getQuery_TTL();
+//        return "Network:" + "\ngrid_size: " + config.getGrid_size()
+//                + "\nnumNodes: " + config.getNumNodes() + "\ndistanceNodes: "
+//                + config.getDistanceNodes() + "\nrangeNodes: "
+//                + config.getRangeNodes() + "\nqueryNodes: "
+//                + config.getQueryNodes() + "\nqueryStep: "
+//                + config.getQueryStep() + "\nevent_P: " + config.getEvent_P()
+//                + "\nagent_P: " + config.getAgent_P() + "\nagent_TTL: "
+//                + config.getAgent_TTL() + "\nquery_TTL: "
+//                + config.getQuery_TTL();
+       
+       String s = ""; 
+       for( int y =20; y<30;y++)
+       {
+           for( int x=0; x<50; x++)
+           {
+               s = s+" "+messagesAt(x,y);
+           }
+           s = s+"\n";
+       }
+       return s;
+    }
+    
+    private int messagesAt( int x, int y)
+    {
+        int nr =0;
+        Position pos= new Position(x,y);
+        for( Message m: this.messages)
+        {
+            if( m.getPosition().equals(pos))
+            {
+                nr++;
+            }
+        }
+        for( Message m: this.queuedMessages)
+        {
+            if( m.getPosition().equals(pos))
+            {
+                nr++;
+            }
+        }
+        return nr;
     }
     
     public String printQueryNodes()

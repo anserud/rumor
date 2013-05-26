@@ -2,8 +2,8 @@
 package ou3;
 
 
+import java.util.HashSet;
 import java.util.Stack;
-import java.util.TreeSet;
 
 
 public class QueryMessage extends Message
@@ -177,7 +177,7 @@ public class QueryMessage extends Message
         this.currentPosition = this.path.firstElement();
         this.path = new Stack<Node>();
         this.status = State.SEARCHING;
-        this.past = new TreeSet<Node>();
+        this.past = new HashSet<Node>(120);
         this.payLoad = null;
     }
     

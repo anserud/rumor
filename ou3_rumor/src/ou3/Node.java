@@ -14,8 +14,8 @@ public class Node implements Comparable<Node>
     private Node[]                  neighbours;
     private TreeMap<EventID, Route> routingTable;
     private ArrayList<Event>        eventList;
-    private static float              eventProbability;
-    private static float              agentProbability;
+    private static float            eventProbability;
+    private static float            agentProbability;
     private boolean                 active;
     private static final Random     randGen = new Random();
     
@@ -90,14 +90,14 @@ public class Node implements Comparable<Node>
     
     public boolean tryCreateEvent( int time )
     {
-        if ( Node.randGen.nextFloat(  ) <= Node.eventProbability )
+        if ( Node.randGen.nextFloat() <= Node.eventProbability )
         {
             createEvent( time );
             return true;
         }
         return false;
     }
-
+    
     /**
      * @param time
      * @return
@@ -123,11 +123,10 @@ public class Node implements Comparable<Node>
         return "Node: [ x: " + this.position.getX() + " , y: "
                 + this.position.getY() + " ]";
     }
-
+    
     public boolean tryCreateAgent()
     {
-        if (  Node.randGen.nextFloat(  ) <= Node.agentProbability )
-            return true;
+        if ( Node.randGen.nextFloat() <= Node.agentProbability ) return true;
         return false;
     }
 }

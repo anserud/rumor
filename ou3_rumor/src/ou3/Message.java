@@ -3,21 +3,21 @@ package ou3;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
-import java.util.TreeSet;
 
 
-public abstract class Message implements Comparable<Message>
+public abstract class Message 
 {
     
     protected int               timeToLive;
-    protected TreeSet<Node>     past;
+    protected HashSet<Node>     past;
     protected Node              currentPosition;
     static private final Random randGen = new Random();
     
     public Message( Node position )
     {
-        this.past = new TreeSet<Node>();
+        this.past = new HashSet<Node>(120);
         this.currentPosition = position;
     }
     
@@ -78,17 +78,17 @@ public abstract class Message implements Comparable<Message>
         
     }
     
-    @Override
-    public int compareTo( Message other )
-    {
-        return this.timeToLive - other.timeToLive;
-    }
     
     @Override
     public String toString()
     {
         return "Message [ timeToLive=" + this.timeToLive + ", currentPosition="
                 + this.currentPosition + " ]";
+    }
+    
+    public Position getPosition()
+    {
+        return this.currentPosition.getPosition();
     }
     
 }

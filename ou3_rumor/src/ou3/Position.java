@@ -36,6 +36,20 @@ public class Position
     
     public int compare( Position other )
     {
-        return ( ( this.x - other.getX() ) + 10000 * ( this.y - other.getY() ) );
+        int dX = ( this.x - other.getX() );
+        if ( dX == 0 )
+            return ( this.y - other.getY() );
+        else
+            return dX;
+        
+    }
+    
+    @Override
+    public boolean equals( Object other )
+    {
+        if ( this == other ) return true;
+        if ( other == null ) return false;
+        if ( this.getClass() != other.getClass() ) return false;
+        return ( ( this.x == ( (Position) other ).getX() ) && ( this.y == ( (Position) other ).getY() ) );
     }
 }
