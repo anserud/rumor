@@ -115,6 +115,6 @@ public class Configuration extends DefaultHandler
         this.agent_TTL = Integer.parseInt( atts.getValue( "agent_TTL" ) );
         this.query_TTL = Integer.parseInt( atts.getValue( "query_TTL" ) );
         this.event_P = Float.parseFloat( atts.getValue( "event_P" ) );
-        this.agent_P = Float.parseFloat( atts.getValue( "event_P" ) );
+        this.agent_P = Float.parseFloat( atts.getValue( "agent_P" ) );
     }
 }

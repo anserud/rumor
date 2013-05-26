@@ -266,6 +266,7 @@ public class Network
         
         activateNodes();
         
+     //   printMessage(this.messages);
     }
 
     /**

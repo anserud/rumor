@@ -90,7 +90,7 @@ public class Node implements Comparable<Node>
     
     public AgentMessage generateEvent( int time )
     {
-        if ( Node.randGen.nextFloat(  ) <= eventProbability )
+        if ( Node.randGen.nextFloat(  ) <= Node.eventProbability )
         {
             Event e = new Event( this, time );
             this.eventList.add( e );
@@ -98,7 +98,7 @@ public class Node implements Comparable<Node>
             Route r = new Route( e.getID(), 0, this );
             this.routingTable.put( r.getEvent(), r );
             
-            if (  Node.randGen.nextFloat(  ) <= agentProbability )
+            if (  Node.randGen.nextFloat(  ) <= Node.agentProbability )
                 return new AgentMessage( this, r );
         }
         return null;
