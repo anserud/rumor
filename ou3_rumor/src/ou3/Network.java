@@ -267,6 +267,7 @@ public class Network
         activateNodes();
         
      //   printMessage(this.messages);
+        //System.out.println(time+" : "+ this.messages.size()+" "+this.queuedMessages.size());
     }
 
     /**
@@ -374,8 +375,14 @@ public class Network
         {
             for ( Node n : row )
             {
-                AgentMessage am = n.generateEvent( time );
-                if ( am != null ) this.messages.add( am );
+                
+                if( n.tryCreateEvent(time))
+                {
+                    if( n.tryCreateAgent() )
+                    {
+                        this.messages.add( new AgentMessage( n ) );
+                    }
+                }
             }
         }
     }

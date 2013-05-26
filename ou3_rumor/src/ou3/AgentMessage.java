@@ -16,12 +16,11 @@ public class AgentMessage extends Message
         AgentMessage.lifeLength = lifeLength;
     }
     
-    public AgentMessage( Node position, Route source )
+    public AgentMessage( Node position )
     {
         super( position );
         this.timeToLive = AgentMessage.lifeLength;
         this.routingTable = new TreeMap<EventID, Route>();
-        this.routingTable.put( source.getEvent(), source );
     }
     
     public void syncroniseTable( TreeMap<EventID, Route> nodeTable )

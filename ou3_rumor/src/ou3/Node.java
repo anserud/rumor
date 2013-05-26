@@ -88,20 +88,27 @@ public class Node implements Comparable<Node>
         return this.neighbours;
     }
     
-    public AgentMessage generateEvent( int time )
+    public boolean tryCreateEvent( int time )
     {
         if ( Node.randGen.nextFloat(  ) <= Node.eventProbability )
         {
-            Event e = new Event( this, time );
-            this.eventList.add( e );
-            
-            Route r = new Route( e.getID(), 0, this );
-            this.routingTable.put( r.getEvent(), r );
-            
-            if (  Node.randGen.nextFloat(  ) <= Node.agentProbability )
-                return new AgentMessage( this, r );
+            createEvent( time );
+            return true;
         }
-        return null;
+        return false;
+    }
+
+    /**
+     * @param time
+     * @return
+     */
+    private void createEvent( int time )
+    {
+        Event e = new Event( this, time );
+        this.eventList.add( e );
+        
+        Route r = new Route( e.getID(), 0, this );
+        this.routingTable.put( r.getEvent(), r );
     }
     
     public QueryMessage generateQuery( EventID id )
@@ -115,5 +122,12 @@ public class Node implements Comparable<Node>
     {
         return "Node: [ x: " + this.position.getX() + " , y: "
                 + this.position.getY() + " ]";
+    }
+
+    public boolean tryCreateAgent()
+    {
+        if (  Node.randGen.nextFloat(  ) <= Node.agentProbability )
+            return true;
+        return false;
     }
 }
