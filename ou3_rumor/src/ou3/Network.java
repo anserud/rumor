@@ -66,11 +66,10 @@ public class Network
         Node.setAgentProbability( config.getAgent_P() );
         Node.setEventProbability( config.getEvent_P() );
         
-        AgentMessage.setLifeLength( agentTTL );
-        QueryMessage.setLifeLength( queryTTL );
-        QueryMessage.setExpected( queryTTL * 8 );
+        AgentMessage.setLifeLength( config.getAgent_TTL() );
+        QueryMessage.setLifeLength( config.getQuery_TTL() );
+        QueryMessage.setExpected( config.getQuery_TTL() * 8 );
 
-        this.numberOfSteps = numberOfSteps;
         
         // Maybe remove?
         gridSize = config.getGrid_size();
