@@ -96,7 +96,15 @@ public class Network
         {
             for ( int y = 0 ; y < this.gridSize ; y++ )
             {
-                this.network[x][y] = new Node( x, y );
+                this.network[x][y] = new Node( x, y,  );
+            }
+        }
+        
+        for( Node[] row: network)
+        {
+            for( Node n : row)
+            {
+                
             }
         }
     }
@@ -248,36 +256,33 @@ public class Network
     public void timeStep( int time )
     {
         
-        // For every Node generate Event:
+        generateEvents( time );
+        
+        generateQueries( time );
+        
+        handleMessages();
+        
+        activateNodes();
+        
+    }
+
+    /**
+     * 
+     */
+    private void activateNodes()
+    {
+        // Activate all Node s for next timeStep:
         for ( Node[] row : this.network )
         {
             for ( Node n : row )
             {
-                AgentMessage am = n.generateEvent( time );
-                
-                // Check if an AgentMessage was created:
-                if ( am != null ) this.messages.add( am );
+                n.setActive( true );
             }
         }
-        
-        // If it is time for it:
-        if ( ( time % this.queryTimer == 0 ) && ( EventID.currentID() != 0 ) )
-        {
-            int target;
-            
-            // Generate a new QueryMessage at every Node in queryNodes:
-            for ( Node qNode : this.queryNodes )
-            {
-                
-                // Determine target:
-                target = this.randGen.nextInt( EventID.currentID() );
-                
-                // Add Message:
-                this.messages
-                        .add( qNode.generateQuery( new EventID( target ) ) );
-            }
-        }
-        
+    }
+
+    private void handleMessages()
+    {
         // Setup Message handling:
         ArrayList<Message> toQueue = new ArrayList<Message>();
         ArrayList<Message> toRemoveM = new ArrayList<Message>();
@@ -335,16 +340,50 @@ public class Network
         // Remove Messages that perished:
         this.messages.removeAll( toRemoveM );
         this.queuedMessages.removeAll( toRemoveQ );
-        
-        // Activate all Node s for next timeStep:
+    }
+
+    private void generateQueries( int time )
+    {
+        // If it is time for it:
+        if ( ( time % this.queryTimer == 0 ) && ( EventID.currentID() != 0 ) )
+        {
+            int target;
+            
+            // Generate a new QueryMessage at every Node in queryNodes:
+            for ( Node qNode : this.queryNodes )
+            {
+                
+                // Determine target:
+                target = this.randGen.nextInt( EventID.currentID() );
+                
+                // Add Message:
+                this.messages
+                        .add( qNode.generateQuery( new EventID( target ) ) );
+            }
+        }
+    }
+
+    private void generateEvents( int time )
+    {
+        // For every Node generate Event:
         for ( Node[] row : this.network )
         {
             for ( Node n : row )
             {
-                n.setActive( true );
+                
+                if( n.tryCreateEvent() )
+                {
+                    if( n.tryCreateAgent())
+                    {
+                        this.messagese.add()
+                    }
+                }
+                AgentMessage am = n.generateEvent( time );
+                
+                // Check if an AgentMessage was created:
+                if ( am != null ) this.messages.add( am );
             }
         }
-        
     }
     
     public void printMessage( Collection<Message> com )

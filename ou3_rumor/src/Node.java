@@ -10,10 +10,10 @@ public class Node implements Comparable<Node> // Om vi vill ha vissa datatyper m
 {
    
    /** The event_ p. */
-   private long event_P; // Dessa vet jag inte ?
+   private long event_P; 
    
    /** The agent_ p. */
-   private long agent_P; // Dessa vet jag inte ?
+   private long agent_P; 
    
    /** Whether the Node is active */
    private boolean active;
@@ -275,32 +275,32 @@ public class Node implements Comparable<Node> // Om vi vill ha vissa datatyper m
     * Try create event.
     *  @author Alexander Anserud
     */
- /*  private void tryCreateEvent()
+   private void tryCreateEvent()
    {
 	   // A float between 1 and 0
-	   float chance  = new Random().nextFloat();
+	    
 	   if(chance <= event_P)
 	   {
 		   // Create event
 	   }  
-   }*/
+   }
    
-   // Hur ska vi göra saker?
-   public AgentMessage generateEvent( int time )
-    {
-        if ( Node.randGen.nextInt( eventProbability ) == 0 )
-        {
-            Event e = new Event( this, time );
-            this.eventList.add( e );
-            
-            Route r = new Route( e.getID(), 0, this );
-            this.routingTable.put( r.getEvent(), r );
-            
-            if ( Node.randGen.nextInt( agentProbability ) == 0 )
-                return new AgentMessage( this, r );
-        }
-        return null;
-    }
+//   // Hur ska vi göra saker?
+//   public AgentMessage generateEvent( int time )
+//    {
+//        if ( Node.randGen.nextInt( eventProbability ) == 0 )
+//        {
+//            Event e = new Event( this, time );
+//            this.eventList.add( e );
+//            
+//            Route r = new Route( e.getID(), 0, this );
+//            this.routingTable.put( r.getEvent(), r );
+//            
+//            if ( Node.randGen.nextInt( agentProbability ) == 0 )
+//                return new AgentMessage( this, r );
+//        }
+//        return null;
+//    }
     
     // Egentligen?
     public QueryMessage generateQuery( EventID id )
