@@ -1,4 +1,7 @@
+
 package ou3;
+
+
 import java.io.File;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -19,13 +22,14 @@ public class Configuration extends DefaultHandler
     private float agent_P;
     private int   agent_TTL;
     private int   query_TTL;
-    public int 		maxSteps;
+    public int    maxSteps;
     
-    public int getMaxSteps() {
-		return maxSteps;
-	}
-
-	public int getGrid_size()
+    public int getMaxSteps()
+    {
+        return maxSteps;
+    }
+    
+    public int getGrid_size()
     {
         return grid_size;
     }
@@ -105,6 +109,7 @@ public class Configuration extends DefaultHandler
         this.numNodes = Integer.parseInt( atts.getValue( "numNodes" ) );
         this.distanceNodes = Integer
                 .parseInt( atts.getValue( "distanceNodes" ) );
+        this.queryStep = Integer.parseInt( atts.getValue( "queryStep" ) );
         this.rangeNodes = Integer.parseInt( atts.getValue( "rangeNodes" ) );
         this.queryNodes = Integer.parseInt( atts.getValue( "queryNodes" ) );
         this.agent_TTL = Integer.parseInt( atts.getValue( "agent_TTL" ) );

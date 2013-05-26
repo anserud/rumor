@@ -30,7 +30,7 @@ public class Network
 {
     
     // The configuration data:
-    private Configuration   config;
+    public Configuration   config;
     
     // Mabe remove these?
     private int                    gridSize;
@@ -154,7 +154,7 @@ public class Network
         boolean retVal = false;
         for( T v: arry )
         {
-            if(v != null && v.equals( val )) retVal=true; // Could go lazy and return here?
+            if(v != null && v.equals( val )) retVal=true;
         }
         return retVal;
     }
