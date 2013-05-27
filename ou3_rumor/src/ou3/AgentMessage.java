@@ -5,17 +5,34 @@ package ou3;
 import java.util.TreeMap;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AgentMessage.
+ */
 public class AgentMessage extends Message
 {
     
+    /** The life length. */
     private static int              lifeLength;
+    
+    /** The routing table. */
     private TreeMap<EventID, Route> routingTable;
     
+    /**
+     * Sets the life length.
+     *
+     * @param lifeLength the new life length
+     */
     public static void setLifeLength( int lifeLength )
     {
         AgentMessage.lifeLength = lifeLength;
     }
     
+    /**
+     * Instantiates a new agent message.
+     *
+     * @param position the position
+     */
     public AgentMessage( Node position )
     {
         super( position );
@@ -23,6 +40,11 @@ public class AgentMessage extends Message
         this.routingTable = new TreeMap<EventID, Route>();
     }
     
+    /**
+     * Syncronise table.
+     *
+     * @param nodeTable the node table
+     */
     public void syncroniseTable( TreeMap<EventID, Route> nodeTable )
     {
         Route updateAt;
@@ -64,18 +86,27 @@ public class AgentMessage extends Message
         }
     }
     
+    /* (non-Javadoc)
+     * @see ou3.Message#choseTarget()
+     */
     @Override
     protected Node choseTarget()
     {
         return this.findNewPath();
     }
     
+    /* (non-Javadoc)
+     * @see ou3.Message#processMessage()
+     */
     @Override
     public void processMessage()
     {
         syncroniseTable( this.currentPosition.getRoutingTable() );
     }
     
+    /* (non-Javadoc)
+     * @see ou3.Message#stepUpdate()
+     */
     @Override
     public boolean stepUpdate()
     {
@@ -83,6 +114,9 @@ public class AgentMessage extends Message
         return this.timeToLive > 0;
     }
     
+    /* (non-Javadoc)
+     * @see ou3.Message#sendingUpdate()
+     */
     @Override
     protected void sendingUpdate()
     {
@@ -92,6 +126,9 @@ public class AgentMessage extends Message
         }
     }
     
+    /* (non-Javadoc)
+     * @see ou3.Message#toString()
+     */
     @Override
     public String toString()
     {
