@@ -1,50 +1,52 @@
-
 package ou3;
 
 
 import java.util.HashSet;
 import java.util.Stack;
 
-
-// TODO: Auto-generated Javadoc
-/**
+/**A query for a certain event can be initiated from any node. 
+ * From there the query will be forwarded to the node which 
+ * detected the particular event.
+ * 
  * The Class QueryMessage.
  */
 public class QueryMessage extends Message
 {
     
-    /** The life length. */
+    /** The life length of the query. */
     private static int  lifeLength;
     
-    /** The expected. */
+    /** The expected time for the query to return. */
     private static int  expected;
     
-    /** The first attempt. */
+    /** The first attempt to send query to an event. */
     private boolean     firstAttempt;
     
     /** The attempt time. */
     private int         attemptTime;
     
-    /** The path. */
+    /** The path to the event. */
     private Stack<Node> path;
     
-    /** The status. */
+    /** The status of the query
+      * ex. to/from event. 
+      */
     private State       status;
     
-    /** The target. */
+    /** The target is the event. */
     private EventID     target;
     
-    /** The pay load. */
-    private Event       payLoad;
+    /** The information the event contains. */
+    private Event       eventInformation;
     
-    /** The success. */
+    /** The number of successful queries. */
     private static int success = 0;
     
-    /** The total. */
+    /** The total number of queries sent. */
     private static int total = 0;
     
     /**
-     * Gets the succes.
+     * Gets the successfully sent queries.
      *
      * @return the succes
      */
@@ -54,7 +56,8 @@ public class QueryMessage extends Message
     }
     
     /**
-     * Gets the total.
+     * Gets the total number of sent queries
+     * including the unsuccsessful.
      *
      * @return the total
      */
@@ -64,24 +67,24 @@ public class QueryMessage extends Message
     }
     
     /**
-     * The Enum State.
+     * The state of the query.
      */
     private enum State
     {
         
         /** The routing. */
         ROUTING, 
- /** The searching. */
- SEARCHING, 
- /** The backtracking. */
- BACKTRACKING;
+        /** The searching. */
+        SEARCHING, 
+        /** The backtracking. */
+        BACKTRACKING;
     }
     
     /**
-     * Instantiates a new query message.
+     * Initiates a new query message.
      *
-     * @param target the target
-     * @param position the position
+     * @param sets target to target
+     * @param sets the porition to position
      */
     public QueryMessage( EventID target, Node position )
     {
@@ -131,14 +134,14 @@ public class QueryMessage extends Message
             Route r = this.currentPosition.getRoute( this.target );
             if ( r.getDistance() == 0 )
             {
-                this.payLoad = this.currentPosition.getEvent( this.target );
+                this.eventInformation = this.currentPosition.getEvent( this.target );
                 this.status = State.BACKTRACKING;
             }
             break;
         case BACKTRACKING:
             if ( this.path.empty() )
             {
-                System.out.println( this.payLoad );
+                System.out.println( this.eventInformation );
                 QueryMessage.success++;
                 this.timeToLive = 0;
                 this.firstAttempt = false;
@@ -191,9 +194,9 @@ public class QueryMessage extends Message
     }
     
     /**
-     * Sets the life length.
+     * Sets the life length of the query.
      *
-     * @param lifeLength the new life length
+     * @param lifeLength, new life length
      */
     public static void setLifeLength( int lifeLength )
     {
@@ -226,14 +229,14 @@ public class QueryMessage extends Message
     public String toString()
     {
         return super.toString() + " / QueryMessage [ status=" + this.status
-                + ", target=" + this.target + ", payLoad=" + this.payLoad
-                + "] / ";
+                + ", target=" + this.target + ", eventInformation=" 
+                + this.eventInformation + "] / ";
     }
     
     /**
-     * Sets the expected.
+     * Sets the expected time for the query to return.
      *
-     * @param i the new expected
+     * @param i, the new expected time.
      */
     public static void setExpected( int i )
     {
@@ -252,7 +255,7 @@ public class QueryMessage extends Message
         this.path = new Stack<Node>();
         this.status = State.SEARCHING;
         this.past = new HashSet<Node>(120);
-        this.payLoad = null;
+        this.eventInformation = null;
     }
     
 }
