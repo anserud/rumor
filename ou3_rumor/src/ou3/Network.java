@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Random;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The class responisble for keeping the network of Node and control their
  * behaviour. Generates this network, the queryNodes and every Node s neighbour.
@@ -31,23 +32,33 @@ public class Network
 {
     
     // The configuration data:
+    /** The config. */
     public Configuration       config;
     
     // Mabe remove these?
+    /** The grid size. */
     private int                gridSize;
+    
+    /** The query timer. */
     private int                queryTimer;
     
     // The Node-array network:
+    /** The network. */
     private Node[][]           network;
     
     // The Messages, live and queued:
+    /** The messages. */
     private ArrayList<Message> messages;
+    
+    /** The queued messages. */
     private ArrayList<Message> queuedMessages;
     
     // The Nodes' responisble for sending queries:
+    /** The query nodes. */
     private Node[]             queryNodes;
     
     // Random number genreator neccesary:
+    /** The rand gen. */
     private Random             randGen;
     
     /**
@@ -145,11 +156,10 @@ public class Network
     /**
      * Check whether an array of type <T> contains the value val. Return true if
      * so, and false otherwise.
-     * 
-     * @param arry
-     *            the array of type T
-     * @param val
-     *            the T value to look for
+     *
+     * @param <T> the generic type
+     * @param arry the array of type T
+     * @param val the T value to look for
      * @return retVal boolean over whether arry contains val
      */
     private <T> boolean arrayContains( T[] arry, T val )
@@ -268,7 +278,7 @@ public class Network
     }
     
     /**
-     * 
+     * Activate nodes.
      */
     private void activateNodes()
     {
@@ -282,6 +292,9 @@ public class Network
         }
     }
     
+    /**
+     * Handle messages.
+     */
     private void handleMessages()
     {
         // Setup Message handling:
@@ -343,6 +356,11 @@ public class Network
         this.queuedMessages.removeAll( toRemoveQ );
     }
     
+    /**
+     * Generate queries.
+     *
+     * @param time the time
+     */
     private void generateQueries( int time )
     {
         // If it is time for it:
@@ -364,6 +382,11 @@ public class Network
         }
     }
     
+    /**
+     * Generate events.
+     *
+     * @param time the time
+     */
     private void generateEvents( int time )
     {
         // For every Node generate Event:
@@ -384,6 +407,11 @@ public class Network
         }
     }
     
+    /**
+     * Prints the message.
+     *
+     * @param com the com
+     */
     public void printMessage( Collection<Message> com )
     {
         for ( Message msg : com )
@@ -392,6 +420,9 @@ public class Network
         }
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString()
     {
@@ -438,6 +469,11 @@ public class Network
         return nr;
     }
     
+    /**
+     * Prints the query nodes.
+     *
+     * @return the string
+     */
     public String printQueryNodes()
     {
         String s = "";

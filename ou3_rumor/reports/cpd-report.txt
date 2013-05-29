@@ -1,0 +1,28 @@
+Found a 4 line (30 tokens) duplication in the following files: 
+Starting at line 106 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\Network.java
+Starting at line 182 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\Network.java
+
+        for ( int x = 0 ; x < this.gridSize ; x++ )
+        {
+            for ( int y = 0 ; y < this.gridSize ; y++ )
+            {
+=====================================================================
+Found a 8 line (29 tokens) duplication in the following files: 
+Starting at line 45 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\Route.java
+Starting at line 34 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\EventID.java
+
+    }
+    
+    @Override
+    public boolean equals( Object other )
+    {
+        if ( this == other ) return true;
+        if ( other == null ) return false;
+        if ( other.getClass() == this.getClass() )
+=====================================================================
+Found a 2 line (25 tokens) duplication in the following files: 
+Starting at line 209 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\Network.java
+Starting at line 211 of C:\Users\Alexander\git\ou3123\ou3_rumor\src\ou3\Network.java
+
+                if ( x != ( this.gridSize - 1 ) )
+                    neighbours[i++] = this.network[x + 1][y];

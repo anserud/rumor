@@ -9,76 +9,161 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Configuration.
+ */
 public class Configuration extends DefaultHandler
 {
     
+    /** The grid_size. */
     private int   grid_size;
+    
+    /** The num nodes. */
     private int   numNodes;
+    
+    /** The distance nodes. */
     private int   distanceNodes;
+    
+    /** The range nodes. */
     private int   rangeNodes;
+    
+    /** The query nodes. */
     private int   queryNodes;
+    
+    /** The query step. */
     private int   queryStep;
+    
+    /** The event_ p. */
     private float event_P;
+    
+    /** The agent_ p. */
     private float agent_P;
+    
+    /** The agent_ ttl. */
     private int   agent_TTL;
+    
+    /** The query_ ttl. */
     private int   query_TTL;
+    
+    /** The max steps. */
     public int    maxSteps;
     
+    /**
+     * Gets the max steps.
+     *
+     * @return the max steps
+     */
     public int getMaxSteps()
     {
         return maxSteps;
     }
     
+    /**
+     * Gets the grid_size.
+     *
+     * @return the grid_size
+     */
     public int getGrid_size()
     {
         return grid_size;
     }
     
+    /**
+     * Gets the num nodes.
+     *
+     * @return the num nodes
+     */
     public int getNumNodes()
     {
         return numNodes;
     }
     
+    /**
+     * Gets the distance nodes.
+     *
+     * @return the distance nodes
+     */
     public int getDistanceNodes()
     {
         return distanceNodes;
     }
     
+    /**
+     * Gets the range nodes.
+     *
+     * @return the range nodes
+     */
     public int getRangeNodes()
     {
         return rangeNodes;
     }
     
+    /**
+     * Gets the query nodes.
+     *
+     * @return the query nodes
+     */
     public int getQueryNodes()
     {
         return queryNodes;
     }
     
+    /**
+     * Gets the query step.
+     *
+     * @return the query step
+     */
     public int getQueryStep()
     {
         return queryStep;
     }
     
+    /**
+     * Gets the event_ p.
+     *
+     * @return the event_ p
+     */
     public float getEvent_P()
     {
         return event_P;
     }
     
+    /**
+     * Gets the agent_ p.
+     *
+     * @return the agent_ p
+     */
     public float getAgent_P()
     {
         return agent_P;
     }
     
+    /**
+     * Gets the agent_ ttl.
+     *
+     * @return the agent_ ttl
+     */
     public int getAgent_TTL()
     {
         return agent_TTL;
     }
     
+    /**
+     * Gets the query_ ttl.
+     *
+     * @return the query_ ttl
+     */
     public int getQuery_TTL()
     {
         return query_TTL;
     }
     
+    /**
+     * Instantiates a new configuration.
+     *
+     * @param fileName the file name
+     */
     public Configuration( String fileName )
     {
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -99,6 +184,9 @@ public class Configuration extends DefaultHandler
     }
     
     // Initialized in constructor by saxParser.parse(new File(fileName), this);
+    /* (non-Javadoc)
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     */
     public void startElement( String namespaceURI, String localName,
             String qName, Attributes atts )
     {
