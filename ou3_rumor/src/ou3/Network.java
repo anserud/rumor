@@ -35,7 +35,6 @@ public class Network
     /** The config. */
     public Configuration       config;
     
-    // Mabe remove these?
     /** The grid size. */
     private int                gridSize;
     
@@ -58,7 +57,7 @@ public class Network
     private Node[]             queryNodes;
     
     // Random number genreator neccesary:
-    /** The rand gen. */
+    /** The random number generator. */
     private Random             randGen;
     
     /**
@@ -76,14 +75,15 @@ public class Network
         // Get the config Configuration:
         config = new Configuration( fileName );
         
+        // Set the probabilities
         Node.setAgentProbability( config.getAgent_P() );
         Node.setEventProbability( config.getEvent_P() );
         
+        // Set the Message configurations
         AgentMessage.setLifeLength( config.getAgent_TTL() );
         QueryMessage.setLifeLength( config.getQuery_TTL() );
         QueryMessage.setExpected( config.getQuery_TTL() * 8 );
         
-        // Maybe remove?
         gridSize = config.getGrid_size();
         queryTimer = config.getQueryStep();
         
@@ -105,8 +105,6 @@ public class Network
     /**
      * Generates Node s for the network array, putting new ones at every
      * location.
-     * <p>
-     * The int gridSize must correspond to the size of the square array.
      * 
      * @see Node
      * @see Node#Node( whatever?
@@ -154,22 +152,24 @@ public class Network
     }
     
     /**
-     * Check whether an array of type <T> contains the value val. Return true if
+     * Check whether an array of type T contains the value val. Return true if
      * so, and false otherwise.
-     *
-     * @param <T> the generic type
-     * @param arry the array of type T
-     * @param val the T value to look for
-     * @return retVal boolean over whether arry contains val
+     * 
+     * @param <T>
+     *            the generic type
+     * @param arr
+     *            the array of type T
+     * @param val
+     *            the T value to look for
+     * @return boolean over whether arr contains val
      */
-    private <T> boolean arrayContains( T[] arry, T val )
+    private <T> boolean arrayContains( T[] arr, T val )
     {
-        boolean retVal = false;
-        for ( T v : arry )
+        for ( T v : arr )
         {
-            if ( v != null && v.equals( val ) ) retVal = true;
+            if ( v != null && v.equals( val ) ) return true;
         }
-        return retVal;
+        return false;
     }
     
     /**
@@ -238,14 +238,6 @@ public class Network
      * Start by generating Events and AgentMessages. Then generate QueryMessages
      * at the QueryNodes if it's time for that, determined in the Configuration.
      * Then update Messages. And finaly activate all Node s for the next step.
-     * <p>
-     * The Message update will follow the formula: For each active Message in
-     * messages: process, stepUpdate, and Send. if it didn't survive the
-     * stepUpdate, mark for removal. if it couldn't send, mark for queueing. For
-     * each Message in queue queuedMessages: stepUpdate and then attempt send.
-     * if it didn't survive the stepUpdate, mark for removal. if it did send,
-     * mark as active. For each Message marked for removal; drop reference. For
-     * each Message to change state, add to correct list and remove from other.
      * 
      * @param time
      *            the current timeStep
@@ -263,13 +255,16 @@ public class Network
      */
     public void timeStep( int time )
     {
-        
+        // Generate Events and Agents:
         generateEvents( time );
         
+        // Generate Queries if it is time:
         generateQueries( time );
         
+        // Process, update and send the messages:
         handleMessages();
         
+        // ReActivate the nodes for the next step:
         activateNodes();
         
         // printMessage(this.messages);
@@ -278,7 +273,7 @@ public class Network
     }
     
     /**
-     * Activate nodes.
+     * Activate nodes after a timeStep so that they are ready next round.
      */
     private void activateNodes()
     {
@@ -293,7 +288,21 @@ public class Network
     }
     
     /**
-     * Handle messages.
+     * Handle messages. The Message update will follow the formula:
+     * <p>
+     * For each active Message in messages: process, stepUpdate, and send. if it
+     * didn't survive the stepUpdate, mark for removal. if it couldn't send,
+     * mark for queueing.
+     * <p>
+     * For each Message in queue queuedMessages: stepUpdate and then attempt
+     * send. if it didn't survive the stepUpdate, mark for removal. if it did
+     * send, mark as active.
+     * <p>
+     * For each Message marked for removal; drop reference. For each Message to
+     * change state, add to correct list and remove from other.
+     * 
+     * @see Network#messages
+     * @see Network#queuedMessages
      */
     private void handleMessages()
     {
@@ -357,9 +366,13 @@ public class Network
     }
     
     /**
-     * Generate queries.
-     *
-     * @param time the time
+     * Generate queries. If the time is correct (, once every 400 steps) this
+     * will generate new QueryMessage s, from every Node in queryNodes to
+     * different targets among all the Event s currently available.
+     * 
+     * @param time
+     *            the current time
+     * @see Network#queryNodes
      */
     private void generateQueries( int time )
     {
@@ -383,21 +396,25 @@ public class Network
     }
     
     /**
-     * Generate events.
-     *
-     * @param time the time
+     * Generate events. For every Node, test whether it will egnerate an Event.
+     * This follows a set probability. If one is generated, test whether an
+     * agent shuld be spawned aswell.
+     * 
+     * @param time
+     *            the time
      */
     private void generateEvents( int time )
     {
-        // For every Node generate Event:
         
+        // For every Node in the network try generate Event:
         for ( Node[] row : this.network )
         {
             for ( Node n : row )
             {
-                
+                // Will mabe create an Event and return true:
                 if ( n.tryCreateEvent( time ) )
                 {
+                    // If so, try to create an agent aswell:
                     if ( n.tryCreateAgent() )
                     {
                         this.messages.add( new AgentMessage( n ) );
@@ -408,9 +425,10 @@ public class Network
     }
     
     /**
-     * Prints the message.
-     *
-     * @param com the com
+     * Prints the Message s in a collection. Used for testing.
+     * 
+     * @param com
+     *            the Collection of Message
      */
     public void printMessage( Collection<Message> com )
     {
@@ -420,48 +438,64 @@ public class Network
         }
     }
     
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-//        return "Network:" + "\ngrid_size: " + config.getGrid_size()
-//                + "\nnumNodes: " + config.getNumNodes() + "\ndistanceNodes: "
-//                + config.getDistanceNodes() + "\nrangeNodes: "
-//                + config.getRangeNodes() + "\nqueryNodes: "
-//                + config.getQueryNodes() + "\nqueryStep: "
-//                + config.getQueryStep() + "\nevent_P: " + config.getEvent_P()
-//                + "\nagent_P: " + config.getAgent_P() + "\nagent_TTL: "
-//                + config.getAgent_TTL() + "\nquery_TTL: "
-//                + config.getQuery_TTL();
-       
-       String s = ""; 
-       for( int y =20; y<30;y++)
-       {
-           for( int x=0; x<50; x++)
-           {
-               s = s+" "+messagesAt(x,y);
-           }
-           s = s+"\n";
-       }
-       return s;
+        // return "Network:" + "\ngrid_size: " + config.getGrid_size()
+        // + "\nnumNodes: " + config.getNumNodes() + "\ndistanceNodes: "
+        // + config.getDistanceNodes() + "\nrangeNodes: "
+        // + config.getRangeNodes() + "\nqueryNodes: "
+        // + config.getQueryNodes() + "\nqueryStep: "
+        // + config.getQueryStep() + "\nevent_P: " + config.getEvent_P()
+        // + "\nagent_P: " + config.getAgent_P() + "\nagent_TTL: "
+        // + config.getAgent_TTL() + "\nquery_TTL: "
+        // + config.getQuery_TTL();
+        
+        String s = "";
+        for ( int y = 20 ; y < 30 ; y++ )
+        {
+            for ( int x = 0 ; x < 50 ; x++ )
+            {
+                s = s + " " + messagesAt( x, y );
+            }
+            s = s + "\n";
+        }
+        return s;
     }
     
-    private int messagesAt( int x, int y)
+    /**
+     * Returns the nnumber of messages currently at position (x,y). Used for
+     * testing.
+     * 
+     * @param x
+     *            the coordinate
+     * @param y
+     *            the coordinate
+     * @return the number of messages at (x,y)
+     */
+    private int messagesAt( int x, int y )
     {
-        int nr =0;
-        Position pos= new Position(x,y);
-        for( Message m: this.messages)
+        int nr = 0;
+        Position pos = new Position( x, y );
+        
+        // Count in messages
+        for ( Message m : this.messages )
         {
-            if( m.getPosition().equals(pos))
+            if ( m.getPosition().equals( pos ) )
             {
                 nr++;
             }
         }
-        for( Message m: this.queuedMessages)
+        
+        // Count in queuedMessages
+        for ( Message m : this.queuedMessages )
         {
-            if( m.getPosition().equals(pos))
+            if ( m.getPosition().equals( pos ) )
             {
                 nr++;
             }
@@ -470,9 +504,10 @@ public class Network
     }
     
     /**
-     * Prints the query nodes.
-     *
-     * @return the string
+     * Prints the query nodes. To see how their position affects the
+     * success-rate of queries. Used for testing.
+     * 
+     * @return the nodes as a String
      */
     public String printQueryNodes()
     {
