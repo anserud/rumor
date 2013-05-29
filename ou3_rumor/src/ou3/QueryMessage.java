@@ -34,7 +34,7 @@ public class QueryMessage extends Message
     private State       status;
     
     /** The target is the event. */
-    private EventID     target;
+    private int     target;
     
     /** The information the event contains. */
     private Event       eventInformation;
@@ -53,6 +53,8 @@ public class QueryMessage extends Message
     public static int getSucces()
     {
         return QueryMessage.success;
+        
+        
     }
     
     /**
@@ -86,7 +88,7 @@ public class QueryMessage extends Message
      * @param sets target to target
      * @param sets the porition to position
      */
-    public QueryMessage( EventID target, Node position )
+    public QueryMessage( int target, Node position )
     {
         super( position );
         this.timeToLive = QueryMessage.lifeLength;

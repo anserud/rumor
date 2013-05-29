@@ -2,6 +2,7 @@
 package ou3;
 
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -47,7 +48,7 @@ public class Network
     
     // The Messages, live and queued:
     /** The messages. */
-    private ArrayList<Message> messages;
+    public ArrayList<Message> messages;
     
     /** The queued messages. */
     private ArrayList<Message> queuedMessages;
@@ -377,7 +378,7 @@ public class Network
     private void generateQueries( int time )
     {
         // If it is time for it:
-        if ( ( time % this.queryTimer == 0 ) && ( EventID.currentID() != 0 ) )
+        if ( ( time % this.queryTimer == 0 ) && ( Event.getCurrentID() != 0 ) )
         {
             int target;
             
@@ -386,11 +387,11 @@ public class Network
             {
                 
                 // Determine target:
-                target = this.randGen.nextInt( EventID.currentID() );
+                target = this.randGen.nextInt( Event.getCurrentID() );
                 
                 // Add Message:
                 this.messages
-                        .add( qNode.generateQuery( new EventID( target ) ) );
+                        .add( qNode.generateQuery( new Integer(target) ) );
             }
         }
     }
@@ -481,12 +482,12 @@ public class Network
     private int messagesAt( int x, int y )
     {
         int nr = 0;
-        Position pos = new Position( x, y );
+        Point pos = new Point( x, y );
         
         // Count in messages
         for ( Message m : this.messages )
         {
-            if ( m.getPosition().equals( pos ) )
+            if ( m.getPoint().equals( pos ) )
             {
                 nr++;
             }
@@ -495,7 +496,7 @@ public class Network
         // Count in queuedMessages
         for ( Message m : this.queuedMessages )
         {
-            if ( m.getPosition().equals( pos ) )
+            if ( m.getPoint().equals( pos ) )
             {
                 nr++;
             }

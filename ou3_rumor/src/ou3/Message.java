@@ -2,6 +2,7 @@
 package ou3;
 
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -147,9 +148,9 @@ public abstract class Message
                 + this.currentPosition + " ]";
     }
     
-    public Position getPosition()
+    public Point getPoint()
     {
-        return this.currentPosition.getPosition();
+        return this.currentPosition.getPoint();
     }
     
 }

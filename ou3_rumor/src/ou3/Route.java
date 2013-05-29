@@ -10,7 +10,7 @@ public class Route
 {
     
     /** The event. */
-    private EventID event;
+    private int eventID;
     
     /** The distance. */
     private int     distance;
@@ -25,9 +25,9 @@ public class Route
      * @param dist the dist
      * @param dir the dir
      */
-    public Route( EventID ID, int dist, Node dir )
+    public Route( int ID, int dist, Node dir )
     {
-        this.event = ID;
+        this.eventID = ID;
         this.distance = dist;
         this.direction = dir;
     }
@@ -39,7 +39,7 @@ public class Route
      */
     public Route( Route toCopy )
     {
-        this.event = toCopy.getEvent();
+        this.eventID = toCopy.getEventID();
         this.distance = toCopy.getDistance();
         this.direction = toCopy.getDirection();
     }
@@ -49,9 +49,9 @@ public class Route
      *
      * @return the event
      */
-    public EventID getEvent()
+    public int getEventID()
     {
-        return this.event;
+        return this.eventID;
     }
     
     /**
@@ -86,6 +86,10 @@ public class Route
         this.direction = dir;
     }
     
+    public String toString(){
+    	return "["+this.eventID+" "+this.direction.toString()+" ]";
+    }
+    
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -95,9 +99,9 @@ public class Route
         if ( this == other ) return true;
         if ( other == null ) return false;
         if ( other.getClass() == this.getClass() )
-            return ( this.event.getID() == ( (Route) other ).getEvent().getID() );
-        if ( other.getClass() == this.event.getClass() )
-            return ( this.event.getID() == ( (EventID) other ).getID() );
+            return ( this.getEventID() == ( (Route) other ).getEventID() );
+        if ( ( this.getEventID() == (((Route) other).getEventID())) )
+            return ( this.getEventID() == (((Route) other).getEventID()));
         return false;
     }
 }

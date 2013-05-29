@@ -15,7 +15,7 @@ public class Event
 {
     
     /** The id of the Event. */
-    private EventID id;
+    private int id;
     
     /** The origin of the Event. */
     private Node    origin;
@@ -23,6 +23,19 @@ public class Event
     /** The time the Event happened. */
     private int     time;
     
+    /** The current id. */
+    private static int currentID = 0;
+    
+    
+    public static int getCurrentID(){
+    	return currentID;
+    }
+    
+    public static int nextID()
+    {
+    	return currentID++;
+    }
+     
     /**
      * Instantiates a new event. 
      * At the given node and time.
@@ -32,9 +45,10 @@ public class Event
      */
     public Event( Node origin, int time )
     {
-        this.id = new EventID();
+        this.id = nextID();
         this.origin = origin;
         this.time = time;
+       
     }
     
     /**
@@ -42,7 +56,7 @@ public class Event
      *
      * @return the id
      */
-    public EventID getID()
+    public int getID()
     {
         return this.id;
     }

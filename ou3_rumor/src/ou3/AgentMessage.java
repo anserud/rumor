@@ -15,7 +15,7 @@ public class AgentMessage extends Message
     private static int              lifeLength;
     
     /** The routing table. */
-    private TreeMap<EventID, Route> routingTable;
+    private TreeMap<Integer, Route> routingTable;
     
     /**
      * Sets the life length for an agentmessage.
@@ -36,7 +36,7 @@ public class AgentMessage extends Message
     {
         super( position );
         this.timeToLive = AgentMessage.lifeLength;
-        this.routingTable = new TreeMap<EventID, Route>();
+        this.routingTable = new TreeMap<Integer, Route>();
     }
     
     /**
@@ -45,15 +45,15 @@ public class AgentMessage extends Message
      *
      * @param nodeTable the node table
      */
-    public void syncroniseTable( TreeMap<EventID, Route> nodeTable )
+    public void syncroniseTable( TreeMap<Integer, Route> nodeTable )
     {
         Route updateAt;
-        EventID key;
+        int key;
         
         // For every route in the message routingtable:
         for ( Route r : this.routingTable.values() )
         {
-            key = r.getEvent();
+            key = r.getEventID();
             
             // Check if the node contains this route:
             if ( nodeTable.containsKey( key ) )
@@ -74,15 +74,15 @@ public class AgentMessage extends Message
             } else
             {
                 // the node doesn't have the route, add it:
-                nodeTable.put( key, new Route(r) );
+                nodeTable.put(key, new Route(r) );
             }
         }
         
         // Add all routes from the node:
         for ( Route r : nodeTable.values() )
         {
-            if ( !this.routingTable.containsKey( r.getEvent() ) )
-                this.routingTable.put( r.getEvent(), new Route( r ) );
+            if ( !this.routingTable.containsKey( r.getEventID() ) )
+                this.routingTable.put( r.getEventID(), new Route( r ) );
         }
     }
     

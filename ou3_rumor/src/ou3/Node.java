@@ -2,26 +2,26 @@
 package ou3;
 
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Node.
+ * 
  */
-public class Node implements Comparable<Node>
+public class Node 
 {
     
     /** The position. */
-    private Position                position;
+    private Point 					point;
     
     /** The neighbours. */
     private Node[]                  neighbours;
     
     /** The routing table. */
-    private TreeMap<EventID, Route> routingTable;
+    private TreeMap<Integer, Route> routingTable;
     
     /** The event list. */
     private ArrayList<Event>        eventList;
@@ -46,9 +46,9 @@ public class Node implements Comparable<Node>
      */
     public Node( int x, int y )
     {
-        this.routingTable = new TreeMap<EventID, Route>();
+        this.routingTable = new TreeMap<Integer, Route>();
         this.eventList = new ArrayList<Event>();
-        this.position = new Position( x, y );
+        this.point = new Point( x, y );
         this.active = true;
     }
     
@@ -87,26 +87,18 @@ public class Node implements Comparable<Node>
      *
      * @return the position
      */
-    public Position getPosition()
+    public Point getPoint()
     {
-        return this.position;
+        return this.point;
     }
-    
-    /* (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    @Override
-    public int compareTo( Node other )
-    {
-        return this.position.compare( other.position );
-    }
+
     
     /**
      * Gets the routing table.
      *
      * @return the routing table
      */
-    public TreeMap<EventID, Route> getRoutingTable()
+    public TreeMap<Integer, Route> getRoutingTable()
     {
         return routingTable;
     }
@@ -117,7 +109,7 @@ public class Node implements Comparable<Node>
      * @param id the id
      * @return the route
      */
-    public Route getRoute( EventID id )
+    public Route getRoute( int id )
     {
         return this.routingTable.get( id );
     }
@@ -148,12 +140,11 @@ public class Node implements Comparable<Node>
      * @param id the id
      * @return the event
      */
-    public Event getEvent( EventID id )
+    public Event getEvent( int id )
     {
         for ( Event e : this.eventList )
         {
-            if ( e.getID().getID() == id.getID() ) return e;
-            // System.out.print( " ," );
+            if ( e.getID() == id ) return e;
         }
         return null;
     }
@@ -193,9 +184,8 @@ public class Node implements Comparable<Node>
     {
         Event e = new Event( this, time );
         this.eventList.add( e );
-        
         Route r = new Route( e.getID(), 0, this );
-        this.routingTable.put( r.getEvent(), r );
+        this.routingTable.put( new Integer(r.getEventID()), r );
     }
     
     /**
@@ -204,7 +194,7 @@ public class Node implements Comparable<Node>
      * @param id the id
      * @return the query message
      */
-    public QueryMessage generateQuery( EventID id )
+    public QueryMessage generateQuery( int id )
     {
         
         return new QueryMessage( id, this );
@@ -216,8 +206,7 @@ public class Node implements Comparable<Node>
     @Override
     public String toString()
     {
-        return "Node: [ x: " + this.position.getX() + " , y: "
-                + this.position.getY() + " ]";
+        return "Node: [ x: " + this.point.toString() + " ]";
     }
     
     /**

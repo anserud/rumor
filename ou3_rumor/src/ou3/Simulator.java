@@ -18,7 +18,7 @@ public class Simulator
      */
     public Simulator( )
     {   
-        this.net = new Network( "C:\\Users\\Alexander\\git\\ou3123\\ou3_rumor\\src\\configuration.xml" );
+        this.net = new Network( "H:\\git\\ou3_0101\\ou3_rumor\\src\\configuration.xml" );
     }
     
     /**
@@ -37,9 +37,8 @@ public class Simulator
 //            }
         }
         
-//        System.out.println( net.printQueryNodes());
-//        System.out.println( QueryMessage.getSucces()+" / "+QueryMessage.getTotal());
-//        System.out.println( EventID.currentID());
+ System.out.println( net.printQueryNodes());
+System.out.println( QueryMessage.getSucces()+" / "+QueryMessage.getTotal());
     }
     
 }
