@@ -1,25 +1,24 @@
-
 package ou3;
 
 
 import java.util.TreeMap;
 
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class AgentMessage.
+ * The Class AgentMessage, creates an agentmessage. Holds a long lifelenght.
+ * Forwards information as it gets sent around the network.
+ * Contains a table with events and paths to them.
  */
 public class AgentMessage extends Message
 {
     
-    /** The life length. */
+    /** The life length of the agent message. */
     private static int              lifeLength;
     
     /** The routing table. */
     private TreeMap<EventID, Route> routingTable;
     
     /**
-     * Sets the life length.
+     * Sets the life length for an agentmessage.
      *
      * @param lifeLength the new life length
      */
@@ -42,6 +41,7 @@ public class AgentMessage extends Message
     
     /**
      * Syncronise table.
+     * updated each time the message is forwarded 
      *
      * @param nodeTable the node table
      */
