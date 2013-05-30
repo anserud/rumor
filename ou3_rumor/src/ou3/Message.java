@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -8,9 +7,13 @@ import java.util.HashSet;
 import java.util.Random;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Message.
+ * The abstract Class Message. Containing functionality to send messages
+ * throughout the Network by processing, updating and sending them.
+ * 
+ * @see QueryMessage
+ * @see AgentMessage
+ * @see Network
  */
 public abstract class Message 
 {
@@ -18,19 +21,19 @@ public abstract class Message
     /** The time to live. */
     protected int               timeToLive;
     
-    /** The past. */
+    /** The past, visited Node s. */
     protected HashSet<Node>     past;
     
     /** The current position. */
     protected Node              currentPosition;
     
-    /** The Constant randGen. */
+    /** The random number generator. */
     static private final Random randGen = new Random();
     
     /**
      * Instantiates a new message.
      *
-     * @param position the position
+     * @param position the Node position created at
      */
     public Message( Node position )
     {
@@ -39,41 +42,66 @@ public abstract class Message
     }
     
     /**
-     * Chose target.
-     *
-     * @return the node
+     * Chose target. Abstract method to be implemented. Must return the node to
+     * which a message will move next; used in the sendMessage().
+     * 
+     * @return the node to move to
      */
     protected abstract Node choseTarget();
     
     /**
-     * Process message.
+     * Process message. Abstract method to be implemented. The Messages will
+     * have different processes to perform at each timeStep, they will be done
+     * by this.
      */
     public abstract void processMessage();
     
     /**
-     * Step update.
-     *
+     * Step update. Abstract method to be implemented. The Messages will update
+     * differently at each timeStep, this method must return whether they
+     * survive (true) to the next step.
+     * 
      * @return true, if successful
      */
     public abstract boolean stepUpdate();
     
     /**
-     * Sending update.
+     * Sending update. Abstract method to be implemented. The Messages will
+     * behave differently as they are sent. This method will be called during
+     * the sendMessage().
+     * 
+     * @see #sendMessage()
      */
     protected abstract void sendingUpdate();
     
     /**
-     * Send message.
-     *
-     * @return true, if successful
+     * Send the Message, performing all actions neccesary during this moment.
+     * First chose target, then do the sendingUpdate() and add the
+     * currentPosition to the past, also add the Neighbours. Then set the
+     * currentPosition to the target. Also set the Node s inactive. Return
+     * whether the target was active, used to see whether queueing is neccesary.
+     * 
+     * @return true, if the target was active
      */
     public boolean sendMessage()
     {
+        this.currentPosition.setActive( false );
+        
+        // Chose target:
         Node target = this.choseTarget();
+        
+        // Send Update:
         this.sendingUpdate();
+        
+        // Add known to past:
         this.past.add( currentPosition );
+        for ( Node n : currentPosition.getNeighbours() )
+            this.past.add( n );
+            
+        // Change the current position:
         this.currentPosition = target;
         
+        // Check and set activity:
         if ( target.getActive() )
         {
             target.setActive( false );
@@ -103,10 +131,11 @@ public abstract class Message
     }
     
     /**
-     * Cross reference.
-     *
-     * @param neighbours the neighbours
-     * @return the array list
+     * Cross reference the neighbours with the past positions visited.
+     * 
+     * @param neighbours
+     *            the neighbours
+     * @return the array list of nodes not seen earlier
      */
     private ArrayList<Node> crossReference( Node[] neighbours )
     {
@@ -122,9 +151,10 @@ public abstract class Message
     }
     
     /**
-     * Find new path.
-     *
-     * @return the node
+     * Find new path. Standard method of chosing a target for sending. Will 
+     * try to avoid Node s already seen.
+     * 
+     * @return the Node target
      */
     protected Node findNewPath()
     {
@@ -138,7 +168,10 @@ public abstract class Message
     }
     
     
-    /* (non-Javadoc)
+    /**
+     * String information about the Message.
+     * 
+     * @return String information
      * @see java.lang.Object#toString()
      */
     @Override
@@ -148,6 +181,11 @@ public abstract class Message
                 + this.currentPosition + " ]";
     }
     
+    /**
+     * Get the position of the Node at which the Message is
+     * 
+     * @return Position of current Node
+     */
     public Point getPoint()
     {
         return this.currentPosition.getPoint();
