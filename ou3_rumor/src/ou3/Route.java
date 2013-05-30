@@ -1,10 +1,12 @@
-
 package ou3;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Route.
+ * The Class Route, containing information used in the
+ * routingTables pertaining to how to get to an event.
+ * Will be bound to a specific Event by the ID, and know
+ * the distance there. Will also store information about 
+ * which way to go to get there.
  */
 public class Route
 {
@@ -19,9 +21,9 @@ public class Route
     private Node    direction;
     
     /**
-     * Instantiates a new route.
+     * Instantiates a new route with the given parameters.
      *
-     * @param ID the id
+     * @param ID the int id
      * @param dist the dist
      * @param dir the dir
      */
@@ -33,7 +35,7 @@ public class Route
     }
     
     /**
-     * Instantiates a new route.
+     * Instantiates a new route based on a previous one.
      *
      * @param toCopy the to copy
      */
@@ -45,7 +47,7 @@ public class Route
     }
     
     /**
-     * Gets the event.
+     * Get the event.
      *
      * @return the event
      */
@@ -55,7 +57,7 @@ public class Route
     }
     
     /**
-     * Gets the distance.
+     * Get the distance.
      *
      * @return the distance
      */
@@ -65,7 +67,7 @@ public class Route
     }
     
     /**
-     * Gets the direction.
+     * Get the direction.
      *
      * @return the direction
      */
@@ -75,7 +77,7 @@ public class Route
     }
     
     /**
-     * Update route.
+     * Update route to the given distance and direction.
      *
      * @param dist the dist
      * @param dir the dir
@@ -86,11 +88,20 @@ public class Route
         this.direction = dir;
     }
     
+    /**
+     * Return String information about the Route.
+     * 
+     * @return String of information
+     */
+    @Override
     public String toString(){
     	return "["+this.eventID+" "+this.direction.toString()+" ]";
     }
     
-    /* (non-Javadoc)
+    /** 
+     * Compare if this route is about the same as the other Object.
+     * 
+     * @return true if they are about the same Event
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
