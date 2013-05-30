@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -7,7 +6,6 @@ package ou3;
  * The Class Event. Responsible for keeping the Event s which happen
  * in the nodes. Needs to keep information about when and where it was 
  * created, aswell as its ID.
- * 
  * 
  * @see Node
  */
@@ -26,11 +24,22 @@ public class Event
     /** The current id. */
     private static int currentID = 0;
     
-    
+    /**
+     * Current id. Checking what the current ID is at. Used to see how many
+     * Event s has been created.
+     * 
+     * @return the int id
+     */
     public static int getCurrentID(){
     	return currentID;
     }
     
+    /**
+     * Next id, will return the current ID and increment it, so that the next
+     * EventID created will have a higher number.
+     * 
+     * @return the int EventID
+     */
     public static int nextID()
     {
     	return currentID++;
@@ -61,7 +70,10 @@ public class Event
         return this.id;
     }
     
-    /* (non-Javadoc)
+    /**
+     * Print information about the Event.
+     * 
+     * @return String of information
      * @see java.lang.Object#toString()
      */
     @Override
