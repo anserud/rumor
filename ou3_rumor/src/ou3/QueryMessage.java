@@ -4,11 +4,12 @@ package ou3;
 import java.util.HashSet;
 import java.util.Stack;
 
-/**A query for a certain event can be initiated from any node. 
- * From there the query will be forwarded to the node which 
- * detected the particular event.
+/**
+ * The Class QueryMessage. A query for a certain event can be initiated from a
+ * querynode. From there the query will be forwarded to the node which detected
+ * the particular event.
  * 
- * The Class QueryMessage.
+ * @see Message
  */
 public class QueryMessage extends Message
 {
@@ -25,15 +26,15 @@ public class QueryMessage extends Message
     /** The attempt time. */
     private int         attemptTime;
     
-    /** The path to the event. */
+    /** The path walked. */
     private Stack<Node> path;
     
     /** The status of the query
-      * ex. to/from event. 
+      * ex. SEARCHING for Route. 
       */
     private State       status;
     
-    /** The target is the event. */
+    /** The target event id. */
     private int     target;
     
     /** The information the event contains. */
@@ -46,7 +47,7 @@ public class QueryMessage extends Message
     private static int total = 0;
     
     /**
-     * Gets the successfully sent queries.
+     * Gets the number of successfully sent queries.
      *
      * @return the succes
      */
@@ -58,10 +59,10 @@ public class QueryMessage extends Message
     }
     
     /**
-     * Gets the total number of sent queries
-     * including the unsuccsessful.
+     * Gets the total number of sent queries sent
+     * including the unsuccsessful ones.
      *
-     * @return the total
+     * @return the total amount sent
      */
     public static int getTotal()
     {
@@ -85,8 +86,8 @@ public class QueryMessage extends Message
     /**
      * Initiates a new query message.
      *
-     * @param sets target to target
-     * @param sets the porition to position
+     * @param target id of the Event
+     * @param position the Node at which created
      */
     public QueryMessage( int target, Node position )
     {
@@ -101,48 +102,79 @@ public class QueryMessage extends Message
         QueryMessage.total++;
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#choseTarget()
+    /**
+     * Overriden abstract method. Will chose the target differently depending on
+     * the current status. Status:
+     * <p>
+     * SEARCHING: use the standard findNewPath() to continue randomly.
+     * <p>
+     * ROUTING: follow the Route in the Node s routingTable.
+     * <p>
+     * BACKTRACKING: follow the path backwards.
+     * 
+     * @return the chosen Node for target
+     * @see Message#choseTarget()
      */
     @Override
     protected Node choseTarget()
     {
         switch ( this.status ) {
         case SEARCHING:
+            // Keep looking:
             return this.findNewPath();
         case ROUTING:
+            // Follow the Route:
             return this.currentPosition.getRoute( this.target ).getDirection();
         case BACKTRACKING:
+            // Follow the path backwards:
             return this.path.peek();
         }
         return null;
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#processMessage()
+    /**
+     * Overriden abstract method. Will process differently depending on current
+     * status. Status:
+     * <p>
+     * SEARCHING: check if the routingtable in the node contains the target
+     * event. If so start ROUTING.
+     * <p>
+     * ROUTING: check whether the Route has been followed to the end. If so
+     * start BACKTRACKING.
+     * <P>
+     * BACKTRACKING: check whether back to start If so print the Event, mark
+     * succes and destroy.
+     * 
+     * @see Message#processMessage()
      */
     @Override
     public void processMessage()
     {
         switch ( this.status ) {
         case SEARCHING:
+            // Check whether the current Node has a Route to follow:
             if ( this.currentPosition.getRoutingTable().containsKey(
                     this.target ) )
             {
+                // If so start ROUTING there:
                 this.status = State.ROUTING;
             }
             break;
         case ROUTING:
+            // Check whether the Route has been followed to the end:
             Route r = this.currentPosition.getRoute( this.target );
             if ( r.getDistance() == 0 )
             {
+                // If so get the event and start BACKTRACKING:
                 this.eventInformation = this.currentPosition.getEvent( this.target );
                 this.status = State.BACKTRACKING;
             }
             break;
         case BACKTRACKING:
+            // Check whether back to start:
             if ( this.path.empty() )
             {
+                // If so print the event, mark succes and destroy:
                 System.out.println( this.eventInformation );
                 QueryMessage.success++;
                 this.timeToLive = 0;
@@ -153,42 +185,50 @@ public class QueryMessage extends Message
         }
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#stepUpdate()
+    /**
+     * Overriden abstract method. Update the QueryMessage after the timeStep,
+     * incrementing the attemptTime, and (decrement) the timeToLive if
+     * SEARCHING. If they reach their limits, restart if firstAttempt or return
+     * false otherwise.
+     * 
+     * @return true if it survives
+     * @see Message#stepUpdate()
      */
     @Override
     public boolean stepUpdate()
     {
+        // Check attemptTime survival:
         this.attemptTime++;
         if ( this.attemptTime >= QueryMessage.expected )
         {
+            // Check restart:
             if ( this.firstAttempt )
             {
+                // Restart:
                 this.restartQuery();
                 this.firstAttempt = false;
-                // System.out.print( " Restarting Query to: "+this.target+" 1\n"
-                // );
                 return true;
             } else
             {
-                // System.out.print( " Destroying Query to: "+this.target+" 1\n"
-                // );
+                // Didn't survive:
                 return false;
             }
         }
+        
+        // Check timeToLive survival:
         if ( this.status == State.SEARCHING ) this.timeToLive--;
         if ( this.timeToLive <= 0 )
         {
+            // Check restart:
             if ( this.firstAttempt )
             {
+                // Restart:
                 this.restartQuery();
                 this.firstAttempt = false;
-                // System.out.print( " Restarting Query to: "+this.target+" 2\n"
-                // );
+            
             } else
             {
-                // System.out.print( " Destroying Query to: "+this.target+" 2\n"
-                // );
+                // Didn't survive:
                 return false;
             }
         }
@@ -206,8 +246,12 @@ public class QueryMessage extends Message
         
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#sendingUpdate()
+    /**
+     * Overriden abstract method. Will update differently depending on current
+     * status. If SEARCHING or ROUTING add the currentPosition to the path. If
+     * BACKTRACKING pop the top of the path.
+     * 
+     * @see Message#sendingUpdate()
      */
     @Override
     protected void sendingUpdate()
@@ -224,8 +268,11 @@ public class QueryMessage extends Message
         
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#toString()
+    /**
+     * Return String of some information about the Message.
+     * 
+     * @return String of information
+     * @see Message#toString()
      */
     @Override
     public String toString()
@@ -247,7 +294,7 @@ public class QueryMessage extends Message
     }
     
     /**
-     * Restart query.
+     * Restart query. Used if firstAttempt failed.
      */
     private void restartQuery()
     {
