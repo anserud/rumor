@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -9,9 +8,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Configuration.
+ * The Class Configuration. Reading an xml-file and storing the information
+ * necessary to create a Network.
+ * 
+ * @see DefaultHandler
  */
 public class Configuration extends DefaultHandler
 {
@@ -184,8 +185,11 @@ public class Configuration extends DefaultHandler
     }
     
     // Initialized in constructor by saxParser.parse(new File(fileName), this);
-    /* (non-Javadoc)
-     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+    /**
+     * xml-reading.
+     * 
+     * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String,
+     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement( String namespaceURI, String localName,
             String qName, Attributes atts )
