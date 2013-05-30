@@ -216,7 +216,7 @@ public class Node
     @Override
     public String toString()
     {
-        return "Node: [ x: " + this.point.toString() + " ]";
+        return "Node: [ x: " + this.point.x + " y: "+ this.point.y + " ]";
     }
     
     /**
