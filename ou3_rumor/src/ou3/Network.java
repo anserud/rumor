@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -8,7 +7,6 @@ import java.util.Collection;
 import java.util.Random;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The class responisble for keeping the network of Node and control their
  * behaviour. Generates this network, the queryNodes and every Node s neighbour.
@@ -32,8 +30,7 @@ import java.util.Random;
 public class Network
 {
     
-    // The configuration data:
-    /** The config. */
+    /** The configuration data: */
     public Configuration       config;
     
     /** The grid size. */
@@ -42,22 +39,18 @@ public class Network
     /** The query timer. */
     private int                queryTimer;
     
-    // The Node-array network:
-    /** The network. */
+    /** The Node-array network */
     private Node[][]           network;
     
-    // The Messages, live and queued:
-    /** The messages. */
+    /** The live messages. */
     public ArrayList<Message> messages;
     
     /** The queued messages. */
     private ArrayList<Message> queuedMessages;
     
-    // The Nodes' responisble for sending queries:
-    /** The query nodes. */
+    /** The Node s responisble for sending queries */
     private Node[]             queryNodes;
     
-    // Random number genreator neccesary:
     /** The random number generator. */
     private Random             randGen;
     
@@ -108,7 +101,6 @@ public class Network
      * location.
      * 
      * @see Node
-     * @see Node#Node( whatever?
      */
     private void generateNodes()
     {
@@ -123,7 +115,7 @@ public class Network
     }
     
     /**
-     * Assign queryNodeNumber of Node s to be respnsible for generating
+     * Assign queryNodeNumber of Node s to be responsible for generating
      * QueryMessage s.
      * 
      * @see #queryNodes
@@ -268,9 +260,6 @@ public class Network
         // ReActivate the nodes for the next step:
         activateNodes();
         
-        // printMessage(this.messages);
-        // System.out.println(time+" : "+
-        // this.messages.size()+" "+this.queuedMessages.size());
     }
     
     /**
@@ -397,12 +386,11 @@ public class Network
     }
     
     /**
-     * Generate events. For every Node, test whether it will egnerate an Event.
+     * Generate events. For every Node, test whether it will generate an Event.
      * This follows a set probability. If one is generated, test whether an
-     * agent shuld be spawned aswell.
+     * agent should be spawned aswell.
      * 
-     * @param time
-     *            the time
+     * @param time the time
      */
     private void generateEvents( int time )
     {
@@ -439,9 +427,10 @@ public class Network
         }
     }
     
-    /*
-     * (non-Javadoc)
+    /**
+     * Return String information about the network.
      * 
+     * @return s String of information about the network
      * @see java.lang.Object#toString()
      */
     @Override
