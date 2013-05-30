@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -8,22 +7,27 @@ import java.util.Random;
 import java.util.TreeMap;
 
 /**
- * The Class Node.
+ * The Class of the Node, existing at a position in the Network.
+ * Will keep track off the nearby Node s to which Message s can be sent,
+ * The list of Event s that has happened at the Node, and a routingTable of
+ * information concerning how to get to other Event s. Must also know if able
+ * to recieve or send a Message this round.
  * 
+ * @see Network
  */
 public class Node 
 {
     
-    /** The position. */
+    /** The position of the Node. */
     private Point 					point;
     
-    /** The neighbours. */
+    /** The nearby Node neighbours. */
     private Node[]                  neighbours;
     
     /** The routing table. */
     private TreeMap<Integer, Route> routingTable;
     
-    /** The event list. */
+    /** The list of Event that has happened here. */
     private ArrayList<Event>        eventList;
     
     /** The event probability. */
@@ -32,17 +36,17 @@ public class Node
     /** The agent probability. */
     private static float              agentProbability;
     
-    /** The active. */
+    /** The active state, determining whether it can handle messages. */
     private boolean                 active;
     
-    /** The Constant randGen. */
+    /** The random number generator. */
     private static final Random     randGen = new Random();
     
     /**
      * Instantiates a new node.
      *
-     * @param x the x
-     * @param y the y
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     public Node( int x, int y )
     {
@@ -53,9 +57,10 @@ public class Node
     }
     
     /**
-     * Update neighbours.
-     *
-     * @param nextDoor the next door
+     * Update neighbours, setting them to the given array.
+     * 
+     * @param neighbour
+     *            array of the communicatable Node s nearby
      */
     public void updateNeighbours( Node[] nextDoor )
     {
@@ -63,7 +68,7 @@ public class Node
     }
     
     /**
-     * Sets the event probability.
+     * Set the event probability.
      *
      * @param eventProbability the new event probability
      */
@@ -73,7 +78,7 @@ public class Node
     }
     
     /**
-     * Sets the agent probability.
+     * Set the agent probability.
      *
      * @param agentProbability the new agent probability
      */
@@ -83,7 +88,7 @@ public class Node
     }
     
     /**
-     * Gets the position.
+     * Get the position.
      *
      * @return the position
      */
@@ -106,8 +111,8 @@ public class Node
     /**
      * Gets the route.
      *
-     * @param id the id
-     * @return the route
+     * @param id the id of the requested Route s Event
+     * @return the Route
      */
     public Route getRoute( int id )
     {
@@ -115,9 +120,9 @@ public class Node
     }
     
     /**
-     * Gets the active.
+     * Get the active.
      *
-     * @return the active
+     * @return the active state
      */
     public boolean getActive()
     {
@@ -127,7 +132,7 @@ public class Node
     /**
      * Sets the active.
      *
-     * @param active the new active
+     * @param active the new active state
      */
     public void setActive( boolean active )
     {
@@ -135,10 +140,10 @@ public class Node
     }
     
     /**
-     * Gets the event.
+     * Gets the specified Event.
      *
-     * @param id the id
-     * @return the event
+     * @param id the id of the Event
+     * @return the Event, or null if it can't be found
      */
     public Event getEvent( int id )
     {
@@ -160,10 +165,12 @@ public class Node
     }
     
     /**
-     * Try create event.
-     *
+     * Try create event. Testing the set probability, and running createEvent()
+     * if successful.
+     * 
      * @param time the time
      * @return true, if successful
+     * @see #createEvent(int time )
      */
     public boolean tryCreateEvent( int time )
     {
@@ -189,8 +196,8 @@ public class Node
     }
     
     /**
-     * Generate query.
-     *
+     * Generate query aimed at the id.
+     * 
      * @param id the id
      * @return the query message
      */
@@ -200,7 +207,10 @@ public class Node
         return new QueryMessage( id, this );
     }
     
-    /* (non-Javadoc)
+    /**
+     * Return String of information about the node.
+     * 
+     * @return String of information
      * @see java.lang.Object#toString()
      */
     @Override
@@ -210,8 +220,8 @@ public class Node
     }
     
     /**
-     * Try create agent.
-     *
+     * Test agent probability.
+     * 
      * @return true, if successful
      */
     public boolean tryCreateAgent()
