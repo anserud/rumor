@@ -40,9 +40,9 @@ public class AgentMessage extends Message
     }
     
     /**
-     * Syncronise table.
-     * updated each time the message is forwarded 
-     *
+     * Syncronise table between the current Node and this routingTable. Updated
+     * each time the message is forwarded.
+     * 
      * @param nodeTable the node table
      */
     public void syncroniseTable( TreeMap<Integer, Route> nodeTable )
@@ -86,8 +86,13 @@ public class AgentMessage extends Message
         }
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#choseTarget()
+    /**
+     * Overriden abstract method. Choose a target to which the Message will
+     * send. Implements the standard findNesPath.
+     * 
+     * @return A target Node
+     * @see Message#choseTarget()
+     * @see Message#findNewPath()
      */
     @Override
     protected Node choseTarget()
@@ -95,8 +100,10 @@ public class AgentMessage extends Message
         return this.findNewPath();
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#processMessage()
+    /**
+     * Overriden abstract method. Process the Message, syncronising tables.
+     * 
+     * @see Message#processMessage()
      */
     @Override
     public void processMessage()
@@ -104,8 +111,12 @@ public class AgentMessage extends Message
         syncroniseTable( this.currentPosition.getRoutingTable() );
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#stepUpdate()
+    /**
+     * Overriden abstract method. Update the time-to-live, returning whether it
+     * is over zero.
+     * 
+     * @return a boolean of whether it survives.
+     * @see Message#stepUpdate()
      */
     @Override
     public boolean stepUpdate()
@@ -114,8 +125,11 @@ public class AgentMessage extends Message
         return this.timeToLive > 0;
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#sendingUpdate()
+    /**
+     * Overriden abstract method. Update the routingTable to show correct
+     * routes.
+     * 
+     * @see Message#sendingUpdate()
      */
     @Override
     protected void sendingUpdate()
@@ -126,8 +140,11 @@ public class AgentMessage extends Message
         }
     }
     
-    /* (non-Javadoc)
-     * @see ou3.Message#toString()
+    /**
+     * Some information to print about the message.
+     * 
+     * @return String of information
+     * @see Message#toString()
      */
     @Override
     public String toString()
