@@ -194,8 +194,8 @@ public class Configuration extends DefaultHandler
     public void startElement( String namespaceURI, String localName,
             String qName, Attributes atts )
     {
-        System.out.println( "Loading configuration file: "
-                + atts.getValue( "name" ) + ".." );
+        /*System.out.println( "Loading configuration file: "
+                + atts.getValue( "name" ) + ".." );*/
         this.maxSteps = Integer.parseInt( atts.getValue( "maxSteps" ) );
         this.grid_size = Integer.parseInt( atts.getValue( "grid_size" ) );
         this.numNodes = Integer.parseInt( atts.getValue( "numNodes" ) );
