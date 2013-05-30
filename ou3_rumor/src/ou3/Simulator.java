@@ -1,4 +1,3 @@
-
 package ou3;
 
 
@@ -37,8 +36,9 @@ public class Simulator
 //            }
         }
         
- System.out.println( net.printQueryNodes());
-System.out.println( QueryMessage.getSucces()+" / "+QueryMessage.getTotal());
+// System.out.println( net.printQueryNodes());
+        System.out.println( QueryMessage.getSucces()+" / "+QueryMessage.getTotal());
+      //        System.out.println( EventID.currentID());  
     }
     
 }
