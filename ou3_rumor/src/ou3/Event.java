@@ -20,7 +20,7 @@ public class Event
     /** The origin of the Event. */
     private Node    origin;
     
-    /** The time the Event happened. */
+    /** The time the Event happened.  */
     private int     time;
     
     /** The current id. */

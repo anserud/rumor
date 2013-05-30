@@ -14,7 +14,7 @@ public class Simulator
     private Network net;
     
     /**
-     * Instantiates a new simulator.
+     * Instantiates a new simulator. 
      */
     public Simulator( )
     {   

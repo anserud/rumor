@@ -119,7 +119,7 @@ public class QueryMessage extends Message
     }
     
     /* (non-Javadoc)
-     * @see ou3.Message#processMessage()
+     * @see ou3.Message#processMessage() 
      */
     @Override
     public void processMessage()

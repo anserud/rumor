@@ -10,7 +10,7 @@ import java.util.Random;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Message.
+ * The Class Message. 
  */
 public abstract class Message 
 {

@@ -373,7 +373,7 @@ public class Network
      * 
      * @param time
      *            the current time
-     * @see Network#queryNodes
+     * @see Network#queryNodes 
      */
     private void generateQueries( int time )
     {

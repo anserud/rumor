@@ -15,7 +15,7 @@ public class Route
     /** The distance. */
     private int     distance;
     
-    /** The direction. */
+    /** The direction. */ 
     private Node    direction;
     
     /**

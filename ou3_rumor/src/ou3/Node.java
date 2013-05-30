@@ -178,7 +178,7 @@ public class Node
     /**
      * Creates the event.
      *
-     * @param time the time
+     * @param time the time 
      */
     private void createEvent( int time )
     {

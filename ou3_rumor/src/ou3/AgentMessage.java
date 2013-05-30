@@ -4,9 +4,11 @@ package ou3;
 import java.util.TreeMap;
 
 /**
- * The Class AgentMessage, creates an agentmessage. Holds a long lifelenght.
- * Forwards information as it gets sent around the network.
+ * The Class AgentMessage, creates an agent message. 
+ * Holds a long lifelenght and forwards information as 
+ * it gets sent around the network.
  * Contains a table with events and paths to them.
+ * 
  */
 public class AgentMessage extends Message
 {
@@ -41,9 +43,9 @@ public class AgentMessage extends Message
     
     /**
      * Syncronise table.
-     * updated each time the message is forwarded 
+     * Updated each time the message is forwarded 
      *
-     * @param nodeTable the node table
+     * @param nodeTable the node table 
      */
     public void syncroniseTable( TreeMap<Integer, Route> nodeTable )
     {

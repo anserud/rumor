@@ -11,7 +11,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Configuration.
+ * The Class Configuration. 
  */
 public class Configuration extends DefaultHandler
 {
@@ -70,9 +70,9 @@ public class Configuration extends DefaultHandler
     }
     
     /**
-     * Gets the num nodes.
+     * Gets the grid_size.
      *
-     * @return the num nodes
+     * @return the grid_size
      */
     public int getNumNodes()
     {

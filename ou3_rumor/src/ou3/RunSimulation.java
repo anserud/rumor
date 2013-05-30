@@ -5,7 +5,7 @@ package ou3;
 
 /**
  * The Class RunSimulation. The 'main' used to
- * run the rumor-routing network.
+ * run the rumor-routing network. 
  */
 public class RunSimulation
 {
